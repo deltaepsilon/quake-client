@@ -17,6 +17,12 @@ var convict = require('convict'),
       format: "port",
       default: 8080,
       env: "QUIVER_PORT"
+    },
+    sessionSecret: {
+      doc: "Connect session secret",
+      format: "string",
+      default: "You should really change this",
+      env: "QUIVER_SESSION_SECRET"
     }
   });
 
