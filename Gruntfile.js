@@ -8,6 +8,8 @@ module.exports = function (grunt) {
   // load all grunt tasks
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+
   // configurable paths
   var yeomanConfig = {
     app: 'app',
@@ -41,6 +43,10 @@ module.exports = function (grunt) {
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ],
         tasks: ['livereload']
+      },
+      nodeunitTest: {
+        files: ['server.js', 'server-test.js'],
+        tasks: ['nodeunit']
       }
     },
     connect: {
@@ -257,10 +263,11 @@ module.exports = function (grunt) {
           ]
         }]
       }
+    },
+    nodeunit: {
+      all: ['server-test.js']
     }
   });
-
-  grunt.renameTask('regarde', 'watch');
 
   grunt.registerTask('server', [
     'clean:server',

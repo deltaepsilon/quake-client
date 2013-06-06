@@ -20,7 +20,7 @@ var convict = require('convict'),
     },
     sessionSecret: {
       doc: "Connect session secret",
-      format: "string",
+      format: "*",
       default: "You should really change this",
       env: "QUIVER_SESSION_SECRET"
     }
