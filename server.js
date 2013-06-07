@@ -40,21 +40,19 @@ app.use(quake.middleware.decision);
 
 
 //************************************  Auth
-function findOrCreate (accessToken, refreshToken, profile, done) {
+function serialize (profile, done) {
   quake.user.findOrCreate(profile, function(user) {
     done(null, user);
   });
 }
-function serialize (user, done) {
-  done(null, user._id);
-}
 
 function deserialize (obj, done) {
+  console.log('deserialize', obj, done);
   quake.user.findByID(obj._id, function(apiUser) {
     done(null, apiUser);
   });
 }
-app.use(quiverAuth(findOrCreate, serialize, deserialize));
+app.use(quiverAuth(serialize, deserialize));
 
 app.get('/', function(req, res, next) {
   if (!req.session.passport.user) {
@@ -70,15 +68,10 @@ app.get('/', function(req, res, next) {
 //*********************************** Start server with Quake Auth
 app.use(express.static(__dirname + '/dist')); //Needs to go last so that middleware can work on all requests
 
-quake.auth(function(err, res) {
-  if (err) {
-    throw new Error(err);
-  } else {
-    app.listen(conf.get('port'));
-    console.log('Starting Quiver on port ' + conf.get('port'));
-  }
+
+app.listen(conf.get('port'));
+quake.auth.getToken(function(token) {
+  console.log('Starting Quiver on port ' + conf.get('port'));
 });
-
-
 
 module.exports = app;
