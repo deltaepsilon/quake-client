@@ -4,10 +4,7 @@ var express = require('express'),
   colors = require('colors'),
   fs = require('fs')
   quiverAuth = require('quiver-auth'),
-  quake = {auth: function(callback) {
-    console.log('this sucka is empty');
-    callback();
-  }}; //require('quake-sdk');
+  quake = require('quake-sdk');
 
 
 //***************************************** Template stuff
@@ -37,6 +34,8 @@ app.use(function(req, res, next) {
   console.log('%s %s', req.method, req.url);
   next();
 });
+
+app.use(quake.middleware.decision);
 
 
 

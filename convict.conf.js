@@ -10,7 +10,7 @@ var convict = require('convict'),
       doc: "The IP address to bind.",
       format: "ipaddress",
       default: "127.0.0.1",
-      env: "QUIVER_IP_ADDRESS"
+      env: "QUIVER_HOST"
     },
     port: {
       doc: "The port to bind.",
