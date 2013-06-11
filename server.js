@@ -28,7 +28,7 @@ function renderTemplate (res, name) {
 
 //************************************* Middleware
 app.use(express.cookieParser());
-app.use(express.cookieParser({secret: conf.get('sessionSecret')}));
+app.use(express.session({secret: conf.get('sessionSecret')}));
 
 app.use(function(req, res, next) {
   console.log('%s %s', req.method, req.url);
@@ -41,16 +41,14 @@ app.use(quake.middleware.decision);
 
 //************************************  Auth
 function serialize (profile, done) {
-  console.log(profile);
-  quake.user.findOrCreate(profile, function(user) {
+  quake.user.findOrCreate(profile, function(err, user) {
     done(null, user);
   });
 }
 
 function deserialize (obj, done) {
-  console.log('deserialize', obj, done);
-  quake.user.findByID(obj._id, function(apiUser) {
-    done(null, apiUser);
+  quake.user.findByID(obj.id, function(err, user) {
+    done(null, user);
   });
 }
 app.use(quiverAuth(serialize, deserialize));
