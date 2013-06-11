@@ -41,6 +41,7 @@ app.use(quake.middleware.decision);
 
 //************************************  Auth
 function serialize (profile, done) {
+  console.log(profile);
   quake.user.findOrCreate(profile, function(user) {
     done(null, user);
   });

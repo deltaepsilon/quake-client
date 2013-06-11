@@ -43,7 +43,7 @@
   },
   "domains": [
     "quiver.is"
-  ]
+  ],
   "subdomain": "quiver",
   "scripts": {
     "start": "node server.js",
