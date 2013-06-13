@@ -1,6 +1,8 @@
 var express = require('express'),
   app = express(),
   conf = require('./convict.conf.js'),
+  RedisStore = require('connect-redis')(express),
+  redis = require('redis').createClient(),
   colors = require('colors'),
   fs = require('fs')
   quiverAuth = require('quiver-auth'),
@@ -28,7 +30,10 @@ function renderTemplate (res, name) {
 
 //************************************* Middleware
 app.use(express.cookieParser());
-app.use(express.session({secret: conf.get('sessionSecret')}));
+app.use(express.session({
+  secret: conf.get('sessionSecret'),
+  store: new RedisStore({client: redis})
+}));
 
 app.use(function(req, res, next) {
   console.log('%s %s', req.method, req.url);
