@@ -59,17 +59,23 @@ function deserialize (obj, done) {
 app.use(quiverAuth(serialize, deserialize));
 
 app.get('/', function(req, res, next) {
-  var user = req.session.passport.user;
+  var user = req.session.passport.user,
+    quakeToken = req.session.passport.token;
   if (!user) {
     res.setHeader('x-quiver-authenticated', false);
     return renderTemplate(res, 'login');
-  }
-
-  quake.auth.getToken(user.id, user.clientID, user.clientSecret, function (token, header) {
+  } else if (quakeToken) {
     res.setHeader('x-quiver-authenticated', true);
-    res.setHeader('x-quake-token', token);
+    res.setHeader('x-quake-token', quakeToken);
     next();
-  });
+  } else {
+    quake.auth.getToken(user.id, user.clientID, user.clientSecret, function (token, header) {
+      res.setHeader('x-quiver-authenticated', true);
+      res.setHeader('x-quake-token', token);
+      req.session.passport.token = token;
+      next();
+    });
+  }
 });
 
 
