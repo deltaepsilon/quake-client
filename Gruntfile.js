@@ -306,5 +306,23 @@ module.exports = function (grunt) {
     'usemin'
   ]);
 
+  grunt.registerTask('dist', [
+    'clean:dist',
+    'jshint',
+    'coffee',
+    'compass:dist',
+    'useminPrepare',
+    'imagemin',
+    'cssmin',
+    'htmlmin',
+    'concat',
+    'copy',
+    'cdnify',
+    'ngmin',
+    'uglify',
+    'rev',
+    'usemin'
+  ]);
+
   grunt.registerTask('default', ['build']);
 };
