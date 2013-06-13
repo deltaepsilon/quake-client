@@ -54,13 +54,17 @@ function deserialize (obj, done) {
 app.use(quiverAuth(serialize, deserialize));
 
 app.get('/', function(req, res, next) {
-  if (!req.session.passport.user) {
+  var user = req.session.passport.user;
+  if (!user) {
     res.setHeader('x-quiver-authenticated', false);
-    renderTemplate(res, 'login');
-  } else {
-    res.setHeader('x-quiver-authenticated', true);
-    next();
+    return renderTemplate(res, 'login');
   }
+
+  quake.auth.getToken(user.id, user.clientID, user.clientSecret, function (token, header) {
+    res.setHeader('x-quiver-authenticated', true);
+    res.setHeader('x-quake-token', token);
+    next();
+  });
 });
 
 
@@ -69,7 +73,7 @@ app.use(express.static(__dirname + '/dist')); //Needs to go last so that middlew
 
 
 app.listen(conf.get('port'));
-quake.auth.getToken(function(token) {
+quake.auth.getToken('quiver', null, null, function(token) {
   console.log('Starting Quiver on port ' + conf.get('port'));
 });
 
