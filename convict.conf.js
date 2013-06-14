@@ -15,7 +15,7 @@ var convict = require('convict'),
     port: {
       doc: "The port to bind.",
       format: "port",
-      default: 8080,
+      default: 9000,
       env: "QUIVER_PORT"
     },
     sessionSecret: {
