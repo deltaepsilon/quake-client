@@ -6,17 +6,29 @@ var convict = require('convict'),
       default: "development",
       env: "NODE_ENV"
     },
-    ip: {
-      doc: "The IP address to bind.",
+    quiver_host: {
+      doc: "Quiver host",
       format: "ipaddress",
       default: "127.0.0.1",
       env: "QUIVER_HOST"
     },
-    port: {
-      doc: "The port to bind.",
+    quiver_port: {
+      doc: "Quiver port",
       format: "port",
       default: 9000,
       env: "QUIVER_PORT"
+    },
+    quake_host: {
+      doc: "Quake host",
+      format: "ipaddress",
+      default: "127.0.0.1",
+      env: "QUAKE_HOST"
+    },
+    quake_port: {
+      doc: "Quake port",
+      format: "port",
+      default: 9001,
+      env: "QUAKE_PORT"
     },
     sessionSecret: {
       doc: "Connect session secret",

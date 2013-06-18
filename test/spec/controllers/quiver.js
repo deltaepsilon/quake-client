@@ -11,10 +11,9 @@ describe('Controller: QuiverCtrl', function () {
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    console.log('sinon', Object.keys(sinon));
     QuiverCtrl = $controller('QuiverCtrl', {
       $scope: scope,
-      $route: sinon.stub({current: {locals: {user: {name: "Chris"}}}})
+      $route: {current: {locals: {user: {name: "Chris"}}}}
     });
   }));
 

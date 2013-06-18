@@ -7,7 +7,8 @@ var express = require('express'),
   fs = require('fs')
   quiverAuth = require('quiver-auth'),
   quake = require('quake-sdk'),
-  _ = require('underscore');
+  _ = require('underscore'),
+  quakeRoot = 'https://' + conf.get('quake_host') + ':' + conf.get('quake_port');
 
 //***************************************** Template stuff
 var consolidate = require('consolidate'),
@@ -73,7 +74,7 @@ app.get('/user', function (req, res) {
     done = function (user, resultToken) {
       res.setHeader('Content-Type', 'text/json');
       res.setHeader('x-quake-token', resultToken);
-      res.send(JSON.stringify({user: _.omit(user, ['clientID', 'clientSecret', 'values', '_json', '_raw'])}));
+      res.send(JSON.stringify({user: _.omit(user, ['clientID', 'clientSecret', 'values', '_json', '_raw']), quakeRoot: quakeRoot}));
     };
   if (!user) {
     return renderTemplate(res, 'login');
@@ -88,6 +89,8 @@ app.get('/user', function (req, res) {
 });
 
 
+
+
 //*********************************** Start server with Quake Auth
 if (conf.get('env') === 'development') { //Needs to go last so that middleware can work on all requests
   app.use(express.static(__dirname + '/app'));
@@ -95,11 +98,17 @@ if (conf.get('env') === 'development') { //Needs to go last so that middleware c
   app.use(express.static(__dirname + '/dist'));
 }
 
+app.use(function (req, res) { // Catch all non-matched routes and return index.html
+  fs.readFile(conf.get('env') === 'development' ? './app/index.html' : './dist/index.html', {encoding: 'utf8'}, function (err, data) {
+    res.send(data);
+  });
+});
 
 
-app.listen(conf.get('port'));
+
+app.listen(conf.get('quiver_port'));
 quake.auth.getToken('quiver', null, null, function(token) {
-  console.log('Starting Quiver on port ' + conf.get('port'));
+  console.log('Starting Quiver on port ' + conf.get('quiver_port'));
 });
 
 module.exports = app;

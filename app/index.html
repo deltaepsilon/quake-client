@@ -27,10 +27,10 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container" ng-controller="QuiverCtrl">
+    <div ng-controller="QuiverCtrl">
         <nav>
             <div class="menu btn-group background-color-000 full-width">
-                <div class="btn btn-small gears background-color-hover-1"></div>
+                <a class="btn btn-small gears background-color-hover-1" ng-click="changeLocation('/settings')"></a>
                 <div class="btn btn-large">Application</div>
                 <div class="btn btn-large">Board</div>
                 <div class="btn btn-large">Developer</div>
@@ -61,7 +61,7 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/quiver.js"></script>
     <script src="scripts/services/userService.js"></script>
-    <script src="scripts/controllers/user.js"></script>
+    <script src="scripts/controllers/settings.js"></script>
     <!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

@@ -1,0 +1,27 @@
+<div ng-controller="SettingsCtrl">
+    <div class="panel">
+        <div class="panel-heading">
+            <span class="panel-heading-primary">User Settings</span>
+        </div>
+        <div class="panel-primary">
+
+            <div class="col-span-12">
+                <h4>Display Name</h4>
+                <input type="text" placeholder="email" ng-model="user.displayName"/>
+            </div>
+
+            <div class="col-span-12">
+                <h4>Email</h4>
+                <input type="text" placeholder="email" ng-model="user.emails[0].value"/>
+            </div>
+
+            <div class="col-span-3">
+                <button class="btn btn-large background-color-3" ng-click="saveUser(user)">Save User Settings</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+

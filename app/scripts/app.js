@@ -2,19 +2,21 @@
 
 angular.module('quiverApp', ['ngResource'])
   .config(function ($routeProvider, $locationProvider) {
+    var userDependency = function ($q, userService) {
+      var deferred = $q.defer();
+      userService.getUser().then(function (user) {
+        deferred.resolve(user);
+      });
+      return deferred.promise;
+    };
+
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'QuiverCtrl',
-        resolve: {
-          user: function ($q, userService) {
-            var deferred = $q.defer();
-            userService.getUser().then(function (user) {
-              deferred.resolve(user);
-            });
-            return deferred.promise;
-          }
-        }
+        templateUrl: 'views/main.html'
+      })
+      .when('/settings', {
+        templateUrl: 'views/settings.html',
+        controller: 'SettingsCtrl'
       })
       .otherwise({
         redirectTo: '/'
