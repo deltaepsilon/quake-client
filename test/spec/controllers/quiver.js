@@ -11,12 +11,14 @@ describe('Controller: QuiverCtrl', function () {
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
+    console.log('sinon', Object.keys(sinon));
     QuiverCtrl = $controller('QuiverCtrl', {
-      $scope: scope
+      $scope: scope,
+      $route: sinon.stub({current: {locals: {user: {name: "Chris"}}}})
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
+  it('should attach a user to $scope.user', function () {
+    expect(scope.user).toEqual({name: "Chris"});
   });
 });

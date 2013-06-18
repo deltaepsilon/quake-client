@@ -7,7 +7,7 @@ angular.module('quiverApp', ['ngResource'])
         templateUrl: 'views/main.html',
         controller: 'QuiverCtrl',
         resolve: {
-          user: function ($q, $route, userService) {
+          user: function ($q, userService) {
             var deferred = $q.defer();
             userService.getUser().then(function (user) {
               deferred.resolve(user);
