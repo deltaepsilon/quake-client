@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: QuiverCtrl', function () {
+describe('Controller: UserCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('quiverApp'));
+  beforeEach(module('testApp'));
 
-  var QuiverCtrl,
+  var UserCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    QuiverCtrl = $controller('QuiverCtrl', {
+    UserCtrl = $controller('UserCtrl', {
       $scope: scope
     });
   }));

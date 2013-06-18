@@ -16,7 +16,7 @@
       <link rel="stylesheet" href="styles/angular-core.scss">
     <!-- endbuild -->
   </head>
-  <body ng-app="testApp">
+  <body ng-app="quiverApp">
     <!--[if lt IE 7]>
       <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
     <![endif]-->
@@ -27,8 +27,29 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container" ng-view>
-        <nav></nav>
+    <div class="container" ng-controller="QuiverCtrl">
+        <nav>
+            <div class="menu btn-group background-color-000 full-width">
+                <div class="btn btn-small gears background-color-hover-1"></div>
+                <div class="btn btn-large">Application</div>
+                <div class="btn btn-large">Board</div>
+                <div class="btn btn-large">Developer</div>
+                <div class="btn btn-large">Design</div>
+                <div class="btn btn-large">Help</div>
+                <div class="btn btn-large borderless no-pad pull-right">
+                    <div id="dlabel" class="menu-dropdown text-right" data-toggle="dropdown">Options <span class="caret-down"></span></div>
+                    <ul id="dropdown-3" class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dlabel">
+                        <li role="menuitem" data-value="Send Message"><div class="dropdown-image eye-transparent"></div>Send Message</li>
+                        <li role="menuitem" data-value="Settings"><div class="dropdown-image person-transparent"></div>Settings</li>
+                        <li role="menuitem" data-value="Favorite"><div class="dropdown-image beaker-transparent"></div>Favorite</li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div ng-view>
+
+        </div>
     </div>
 
     <script src="components/angular/angular.js"></script>
@@ -38,7 +59,9 @@
 
     <!-- build:js scripts/scripts.js -->
     <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/quiver.js"></script>
+    <script src="scripts/services/userService.js"></script>
+    <script src="scripts/controllers/user.js"></script>
     <!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

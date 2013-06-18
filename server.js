@@ -6,8 +6,8 @@ var express = require('express'),
   colors = require('colors'),
   fs = require('fs')
   quiverAuth = require('quiver-auth'),
-  quake = require('quake-sdk');
-
+  quake = require('quake-sdk'),
+  _ = require('underscore');
 
 //***************************************** Template stuff
 var consolidate = require('consolidate'),
@@ -52,35 +52,49 @@ function serialize (profile, done) {
 }
 
 function deserialize (obj, done) {
+  console.log('findig by id');
   quake.user.findByID(obj.id, function(err, user) {
     done(null, user);
   });
 }
-app.use(quiverAuth(serialize, deserialize));
+app.get('/', quiverAuth(serialize, deserialize)); // Only auth for index calls... it's not worth it for anything else
 
 app.get('/', function(req, res, next) {
-  var user = req.session.passport.user,
-    quakeToken = req.session.passport.token;
+  var user = req.session.passport.user;
   if (!user) {
-    res.setHeader('x-quiver-authenticated', false);
+    return renderTemplate(res, 'login');
+  }
+  next();
+});
+
+app.get('/user', function (req, res) {
+  var user = req.session.passport.user,
+    quakeToken = req.session.passport.token,
+    done = function (user, resultToken) {
+      res.setHeader('Content-Type', 'text/json');
+      res.setHeader('x-quake-token', resultToken);
+      res.send(JSON.stringify({user: _.omit(user, ['clientID', 'clientSecret', 'values', '_json', '_raw'])}));
+    };
+  if (!user) {
     return renderTemplate(res, 'login');
   } else if (quakeToken) {
-    res.setHeader('x-quiver-authenticated', true);
-    res.setHeader('x-quake-token', quakeToken);
-    next();
+    done(user, quakeToken);
   } else {
-    quake.auth.getToken(user.id, user.clientID, user.clientSecret, function (token, header) {
-      res.setHeader('x-quiver-authenticated', true);
-      res.setHeader('x-quake-token', token);
+    quake.auth.getToken(user.id, user.clientID, user.clientSecret, function (token) {
       req.session.passport.token = token;
-      next();
+      done(user, token);
     });
   }
 });
 
 
 //*********************************** Start server with Quake Auth
-app.use(express.static(__dirname + '/dist')); //Needs to go last so that middleware can work on all requests
+if (conf.get('env') === 'development') { //Needs to go last so that middleware can work on all requests
+  app.use(express.static(__dirname + '/app'));
+} else {
+  app.use(express.static(__dirname + '/dist'));
+}
+
 
 
 app.listen(conf.get('port'));
