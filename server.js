@@ -34,7 +34,8 @@ function renderTemplate (res, name) {
 app.use(express.cookieParser());
 app.use(express.session({
   secret: conf.get('sessionSecret'),
-  store: new RedisStore({client: redis})
+  store: new RedisStore({client: redis}),
+  cookie: {secure: false, maxAge: 14 * 24 * 60 *60}
 }));
 
 app.use(function(req, res, next) {
@@ -55,13 +56,14 @@ function serialize (profile, done) {
 
 function deserialize (obj, done) {
   quake.user.findByID(obj.id, function(err, user) {
+    console.log('finding user', user.emails[0].value);
     done(null, user);
   });
 }
 
 // Auth only the calls that need it. Looking up users all of the time can get expensive, especially for favicons.
 app.get('/', quiverAuth(serialize, deserialize));
-app.get('/user', quiverAuth(serialize, deserialize));
+app.all('/user', quiverAuth(serialize, deserialize));
 app.get('/logout', quiverAuth(serialize, deserialize));
 
 
@@ -79,7 +81,7 @@ app.get('/logout', function (req, res) {
 });
 
 app.get('/user', function (req, res) {
-  var user = req.session.passport.user,
+  var user = req.user,
     quakeToken = req.session.passport.token,
     done = function (user, resultToken) {
       res.setHeader('Content-Type', 'text/json');
@@ -110,6 +112,9 @@ if (conf.get('env') === 'development') { //Needs to go last so that middleware c
 
 app.use(quiverAuth(serialize, deserialize)); // Auth every call that makes it this far
 app.use(function (req, res) { // Catch all non-matched routes and return index.html
+  if (!req.session.passport.user) {
+    res.redirect('/');
+  }
   if (conf.get('env') === 'development') {
     fs.readFile('./app/index.html', {encoding: 'utf8'}, function (err, data) {
       res.send(data);
