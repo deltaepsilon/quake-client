@@ -8,7 +8,7 @@ var express = require('express'),
   quiverAuth = require('quiver-auth'),
   quake = require('quake-sdk'),
   _ = require('underscore'),
-  quakeRoot = 'https://' + conf.get('quake_host') + ':' + conf.get('quake_port'),
+  quakeRoot = conf.get('quake_external'),
   indexDist = fs.readFileSync('./dist/index.html', 'utf8');
 
 //***************************************** Template stuff
@@ -54,13 +54,16 @@ function serialize (profile, done) {
 }
 
 function deserialize (obj, done) {
-  console.log('findig by id');
   quake.user.findByID(obj.id, function(err, user) {
     done(null, user);
   });
 }
 
-app.use(quiverAuth(serialize, deserialize)); // Only auth for index calls... it's not worth it for anything else
+// Auth only the calls that need it. Looking up users all of the time can get expensive, especially for favicons.
+app.get('/', quiverAuth(serialize, deserialize));
+app.get('/user', quiverAuth(serialize, deserialize));
+app.get('/logout', quiverAuth(serialize, deserialize));
+
 
 app.get('/', function(req, res, next) {
   var user = req.session.passport.user;
@@ -105,12 +108,12 @@ if (conf.get('env') === 'development') { //Needs to go last so that middleware c
   app.use(express.static(__dirname + '/dist'));
 }
 
+app.use(quiverAuth(serialize, deserialize)); // Auth every call that makes it this far
 app.use(function (req, res) { // Catch all non-matched routes and return index.html
   if (conf.get('env') === 'development') {
     fs.readFile('./app/index.html', {encoding: 'utf8'}, function (err, data) {
       res.send(data);
     });
-    console.log(indexDist);
   } else {
     res.send(indexDist);
   }
