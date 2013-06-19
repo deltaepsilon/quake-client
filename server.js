@@ -8,7 +8,8 @@ var express = require('express'),
   quiverAuth = require('quiver-auth'),
   quake = require('quake-sdk'),
   _ = require('underscore'),
-  quakeRoot = 'https://' + conf.get('quake_host') + ':' + conf.get('quake_port');
+  quakeRoot = 'https://' + conf.get('quake_host') + ':' + conf.get('quake_port'),
+  indexDist = fs.readFileSync('./dist/index.html', 'utf8');
 
 //***************************************** Template stuff
 var consolidate = require('consolidate'),
@@ -58,7 +59,8 @@ function deserialize (obj, done) {
     done(null, user);
   });
 }
-app.get('/', quiverAuth(serialize, deserialize)); // Only auth for index calls... it's not worth it for anything else
+
+app.use(quiverAuth(serialize, deserialize)); // Only auth for index calls... it's not worth it for anything else
 
 app.get('/', function(req, res, next) {
   var user = req.session.passport.user;
@@ -66,6 +68,11 @@ app.get('/', function(req, res, next) {
     return renderTemplate(res, 'login');
   }
   next();
+});
+
+app.get('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/');
 });
 
 app.get('/user', function (req, res) {
@@ -99,14 +106,19 @@ if (conf.get('env') === 'development') { //Needs to go last so that middleware c
 }
 
 app.use(function (req, res) { // Catch all non-matched routes and return index.html
-  fs.readFile(conf.get('env') === 'development' ? './app/index.html' : './dist/index.html', {encoding: 'utf8'}, function (err, data) {
-    res.send(data);
-  });
+  if (conf.get('env') === 'development') {
+    fs.readFile('./app/index.html', {encoding: 'utf8'}, function (err, data) {
+      res.send(data);
+    });
+    console.log(indexDist);
+  } else {
+    res.send(indexDist);
+  }
+
 });
 
+app.listen(conf.get('quiver_port')); // I'd start listening after successful auth... but you can't auth without listening first. Oh well.
 
-
-app.listen(conf.get('quiver_port'));
 quake.auth.getToken('quiver', null, null, function(token) {
   console.log('Starting Quiver on port ' + conf.get('quiver_port'));
 });

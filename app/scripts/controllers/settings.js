@@ -6,7 +6,7 @@ angular.module('quiverApp')
     $scope.saveUser = function (user) {
       $scope.user = userService.saveUser(user);
       console.log('saved user', $scope.user);
-    }
+    };
 
 
   });

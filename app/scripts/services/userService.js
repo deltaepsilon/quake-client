@@ -2,9 +2,7 @@
 
 angular.module('quiverApp')
   .factory('userService', function ($q, $http, $resource, $rootScope) {
-    console.log('rootScope', $rootScope);
     var getResource = function () {
-      console.log('root', $rootScope.quake.root);
       return $resource($rootScope.quake.root + '/user', {}, {headers: {'authorization': 'Bearer ' + $rootScope.quake.token}});
     };
 
