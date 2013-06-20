@@ -35,7 +35,7 @@ app.use(express.cookieParser());
 app.use(express.session({
   secret: conf.get('sessionSecret'),
   store: new RedisStore({client: redis}),
-  cookie: {secure: false, maxAge: 1200000}
+  cookie: {secure: false, maxAge: 14 * 24 * 60 * 60 * 1000}
 }));
 
 app.use(function(req, res, next) {

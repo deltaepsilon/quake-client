@@ -75,12 +75,16 @@
 
                 <div class="col-span-12">
                     <h4>Expiration Month</h4>
-                    <select name="expiration-month" id="expiration-month" ng-model="card.month" ng-options="month.number as month.name for month in months" required></select>
+                    <span class="select-wrapper">
+                        <select name="expiration-month" id="expiration-month" ng-model="card.month" ng-options="month.number as month.name for month in months" required></select>
+                    </span>
                 </div>
 
                 <div class="col-span-12">
                     <h4>Expiration Year</h4>
-                    <select name="expiration-year" id="expiration-year" ng-model="card.year" ng-options="year.value as year.value for year in years" required></select>
+                    <span class="select-wrapper">
+                        <select name="expiration-year" id="expiration-year" ng-model="card.year" ng-options="year.value as year.value for year in years" required></select>
+                    </span>
                 </div>
 
                 <div class="col-span-12">
@@ -89,7 +93,7 @@
                 </div>
 
                 <div class="col-span-3">
-                    <button class="btn btn-large background-color-6" ng-click="saveStripe(user.stripe)" ng-disabled="!subscriptionForm.$valid || isValidCard(card) || subscriptionForm.$pristine" >Subscribe</button>
+                    <button class="btn btn-large background-color-6" ng-click="saveSubscription('quiver100', card)" ng-disabled="!cardForm.$valid || !isValidCard(card) || cardForm.$pristine" >Subscribe</button>
                 </div>
             </form>
 

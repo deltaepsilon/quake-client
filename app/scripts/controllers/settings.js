@@ -33,16 +33,23 @@ angular.module('quiverApp')
 
     $scope.saveUser = function (user) {
       $scope.user = userService.saveUser(user);
-      console.log('saved user', $scope.user);
     };
 
     $scope.saveStripe = function (stripe) {
-      console.log('saving stripe', stripe);
       $scope.user = userService.saveUser({stripe: stripe});
     };
 
-    $scope.saveSubscription = function (subscription) {
-      $scope.user = userService.saveUser({subscription: subscription});
+    $scope.saveSubscription = function (id, card) {
+      stripeService.createQuiverSubscription(id, card).then(function (subscription) {
+        var card = subscription.customer.card;
+        $scope.card = {
+          number: card.type + ' ************' + card.last4,
+          month: card.exp_month,
+          year: card.exp_year,
+          cvc: null
+        };
+        $scope.subscription = subscription;
+      });
     };
 
     $scope.isValidCardNumber = function (number) {
@@ -54,7 +61,7 @@ angular.module('quiverApp')
     }
 
     $scope.isValidCard = function (card) {
-      return stripeService.isValidCardNumber(card.number) && stripeService.isValidCVC(card.cvc) && stripeService.isValidExpiry(card.month, card.year);
+      return card && stripeService.isValidCardNumber(card.number) && stripeService.isValidCVC(card.cvc) && stripeService.isValidExpiry(card.month, card.year);
     }
 
 
