@@ -18,6 +18,10 @@ angular.module('quiverApp', ['ngResource'])
         templateUrl: 'views/settings.html',
         controller: 'SettingsCtrl'
       })
+      .when('/feeds', {
+        templateUrl: 'views/feeds.html',
+        controller: 'FeedsCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

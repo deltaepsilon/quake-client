@@ -36,6 +36,12 @@ var convict = require('convict'),
       default: 9001,
       env: "QUAKE_PORT"
     },
+    stripe_pk: {
+      doc: "Stripe publishable key",
+      format: "*",
+      default: "This is totally invalid. Fix it.",
+      env: "QUIVER_STRIPE_PK"
+    },
     sessionSecret: {
       doc: "Connect session secret",
       format: "*",

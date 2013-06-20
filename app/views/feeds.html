@@ -1,0 +1,65 @@
+<div ng-controller="FeedsCtrl">
+
+    <br>
+    <div class="panel">
+        <div class="panel-heading">
+            <span class="panel-heading-primary">Feeds</span>
+        </div>
+
+        <!--Stripe Sign-Up Prompt-->
+        <div class="panel-primary" ng-show="!isStriped(user)">
+            <div class="col-span-12">
+                <h3>Enter Stripe API Keys to Publish Feeds</h3>
+                <hr class="background-color-3 mini-hr">
+                <p>We use Stripe for all payment processing. Stripe has a crazy-fast sign-up process, so you'll be accepting payments in no time.</p>
+                <p><a href="https://stripe.com/">Create a Stripe account</a>, activate it, and enter your API keys (<a href="https://stripe.com/docs/tutorials/dashboard">quick tutorial</a>) into Quiver to activate your feeds.</p>
+            </div>
+            <div class="col-span-3">
+                <br/>
+                <button class="btn btn-large background-color-3" ng-click="changeLocation('/settings#stripe-keys')">Enter API Keys</button>
+            </div>
+        </div>
+
+        <!--Quiver Subscribe Prompt-->
+        <div class="panel-primary col-span-12" ng-show="!isSubscribed(user)">
+            <div class="col-span-12">
+                <h3>Subscribe to Quiver to Publish Feeds</h3>
+                <hr class="background-color-2 mini-hr">
+                <p>We host all of your feeds including video, images and downloads for a single monthly price.</p>
+                <p>Subscribe now to start publishing your content on Quiver's lightening-fast platform.</p>
+            </div>
+            <span class="col-span-3">
+                <br/>
+                <button class="btn btn-large background-color-2" ng-click="changeLocation('/settings#billing')">Activate Subscription</button>
+            </span>
+
+        </div>
+
+        <!--Feed Creation Panel-->
+        <div class="panel-primary" ng-show="isSubscribed(user) && isStriped(user)">
+            <form name="feedForm">
+                <div class="col-span-12">
+                    <h4>Feed Name</h4>
+                    <input type="text" placeholder="Feed Name" ng-model="feed.name"/>
+                </div>
+
+                <div class="col-span-12">
+                    <h4>Feed Path</h4>
+                    <h6>Do not prefix with "/"</h6>
+                    <input type="text" placeholder="/my-feed" ng-model="feed.path" ng-pattern="/[a-zA-Z-]+/"/>
+                </div>
+
+                <div class="col-span-12">
+                    <h4>Feed Price ($/Subscription Term)</h4>
+                    <h6>Set to 0 for a free feed</h6>
+                    <input type="number" placeholder="$" ng-model="feed.price" ng-pattern="/[0-9]+/"/>
+                </div>
+
+                <div class="col-span-3">
+                    <button class="btn btn-large background-color-4" ng-click="saveFeed(feed)" ng-disabled="!feedForm.$valid" >Save Feed</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

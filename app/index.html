@@ -31,19 +31,12 @@
         <nav>
             <div class="menu btn-group background-color-000 full-width">
                 <a class="btn btn-small gears background-color-hover-1" ng-click="changeLocation('/settings')"></a>
-                <div class="btn btn-large">Application</div>
-                <div class="btn btn-large">Board</div>
-                <div class="btn btn-large">Developer</div>
-                <div class="btn btn-large">Design</div>
-                <div class="btn btn-large">Help</div>
-                <div class="btn btn-large borderless no-pad pull-right">
-                    <div id="dlabel" class="menu-dropdown text-right" data-toggle="dropdown">Options <span class="caret-down"></span></div>
-                    <ul id="dropdown-3" class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dlabel">
-                        <li role="menuitem" data-value="Send Message"><div class="dropdown-image eye-transparent"></div>Send Message</li>
-                        <li role="menuitem" data-value="Settings"><div class="dropdown-image person-transparent"></div>Settings</li>
-                        <li role="menuitem" data-value="Favorite"><div class="dropdown-image beaker-transparent"></div>Favorite</li>
-                    </ul>
-                </div>
+                <div class="btn btn-large" ng-click="changeLocation('/write')">Write</div>
+                <div class="btn btn-large" ng-click="changeLocation('/read')">Read</div>
+                <div class="btn btn-large" ng-click="changeLocation('/feeds')">Feeds</div>
+                <div class="btn btn-large" ng-click="changeLocation('/interaction')">Interaction</div>
+                <div class="btn btn-large" ng-click="changeLocation('/subscriptions')">Subscriptions</div>
+                <a class="btn btn-large pull-right" href='/logout'>Log Out</a>
             </div>
         </nav>
 
@@ -62,6 +55,8 @@
     <script src="scripts/controllers/quiver.js"></script>
     <script src="scripts/services/userService.js"></script>
     <script src="scripts/controllers/settings.js"></script>
+    <script src="scripts/controllers/feeds.js"></script>
+    <script src="scripts/services/stripeService.js"></script>
     <!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

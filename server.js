@@ -35,7 +35,7 @@ app.use(express.cookieParser());
 app.use(express.session({
   secret: conf.get('sessionSecret'),
   store: new RedisStore({client: redis}),
-  cookie: {secure: false, maxAge: 14 * 24 * 60 *60}
+  cookie: {secure: false, maxAge: 1200000}
 }));
 
 app.use(function(req, res, next) {
@@ -86,7 +86,7 @@ app.get('/user', function (req, res) {
     done = function (user, resultToken) {
       res.setHeader('Content-Type', 'text/json');
       res.setHeader('x-quake-token', resultToken);
-      res.send(JSON.stringify({user: _.omit(user, ['clientID', 'clientSecret', 'values', '_json', '_raw']), quakeRoot: quakeRoot}));
+      res.send(JSON.stringify({user: _.omit(user, ['clientID', 'clientSecret', 'values', '_json', '_raw']), quakeRoot: quakeRoot, stripePK: conf.get('stripe_pk')}));
     };
   if (!user) {
     return renderTemplate(res, 'login');

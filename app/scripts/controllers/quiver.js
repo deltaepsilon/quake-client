@@ -8,6 +8,9 @@ angular.module('quiverApp')
         token: data.token,
         root: data.quakeRoot
       };
+      $rootScope.stripe = {
+        pk: data.stripePK
+      }
 
     });
 
