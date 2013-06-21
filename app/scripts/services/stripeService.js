@@ -29,18 +29,18 @@ angular.module('quiverApp')
         }, callback);
         return deferred.promise;
       },
-      createQuiverSubscription: function (id, card, user) {
+      createQuiverSubscription: function (card, user, plan) {
         var deferred = $q.defer();
         this.createCustomer(card, function (status, response) {
           if (response.error) {
             deferred.reject(response.error.message);
           } else {
-            user.subscription = {
-              plan: id,
+            user.stripe = {
+              plan: plan,
               customer: response
-            }
-            ;
+            };
             deferred.resolve(userService.createSubscription(user));
+            $rootScope.$digest();
           }
         });
         return deferred.promise;

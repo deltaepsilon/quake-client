@@ -17,10 +17,58 @@
                 </div>
 
                 <div class="col-span-3">
-                    <button class="btn btn-large background-color-3" ng-click="saveUser(user)" ng-disabled="!userForm.$valid || userForm.$pristine" >Save User Settings</button>
+                    <button class="btn btn-large background-color-3" ng-click="saveUser(user); userForm.$setPristine();" ng-disabled="!userForm.$valid || userForm.$pristine" >Save User Settings</button>
                 </div>
             </form>
 
+        </div>
+    </div>
+
+    <br>
+    <div id="subscription" class="panel">
+        <div class="panel-heading">
+            <span class="panel-heading-primary">Subscription</span>
+        </div>
+
+        <div class="panel-primary">
+            <h4>Choose Your Plan</h4>
+            <hr class="background-color-5 mini-hr">
+            <ul class="listing">
+                <li>
+                    <div class="table-cell">
+                        <div class="btn btn-small eye-white background-color-6 circle"></div>
+                    </div>
+                    <div class="table-cell full-width listing-centered">
+                        $0/Month - Preview
+                        <div class="sub">Create and edit content for free</div>
+                        <div class="sub">Prepare to launch your site</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="table-cell">
+                        <div class="btn btn-small thumbs-up background-color-5 circle"></div>
+                    </div>
+                    <div class="table-cell full-width listing-centered">
+                        $30/Month - Basic
+                        <div class="sub">Publish one feed</div>
+                        <div class="sub">Sell downloadable content</div>
+                        <div class="sub">Great for bloggers</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="table-cell">
+                        <div class="btn btn-small star-outline background-color-4 circle"></div>
+                    </div>
+                    <div class="table-cell full-width listing-centered">
+                        $100/Month - Pro
+                        <div class="sub">Publish unlimited feeds</div>
+                        <div class="sub">Create paywalled feeds for your premium content</div>
+                        <div class="sub">Teach free and paid classes</div>
+                        <div class="sub">Interact with readers individually using classroom-inspired tools</div>
+                        <div class="sub">Best for professional writers and instructors</div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -31,43 +79,50 @@
         </div>
         <div class="panel-primary">
 
-            <div class="callout col-span-12">
-                <h4>14-Day Trial then $100/Month</h4>
+            <div class="col-span-12" ng-show="user.stripe">
+                <h4>Your Subscription</h4>
                 <hr class="background-color-6 mini-hr">
-                <ul class="listing">
-                    <li>
-                        <div class="table-cell">
-                            <div class="btn btn-small eye-white background-color-6 circle"></div>
-                        </div>
-                        <div class="table-cell full-width listing-centered">
-                            14-Day Trial
-                            <div class="sub">Your card will not be charged during the trial period</div>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="table-cell">
-                            <div class="btn btn-small thumbs-up background-color-6 circle"></div>
-                        </div>
-                        <div class="table-cell full-width listing-centered">
-                            Need to Cancel? Keep Your Content
-                            <div class="sub">Your account will stay active and you can continue to edit your content</div>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="table-cell">
-                            <div class="btn btn-small dollar-bill background-color-6 circle"></div>
-                        </div>
-                        <div class="table-cell full-width listing-centered">
-                            Change Billing
-                            <div class="sub">Use the form below to change your card</div>
-                        </div>
-                    </li>
-                </ul>
+                <table class="table-dark light-text">
+                    <tbody>
+                        <tr>
+                            <td>Plan</td>
+                            <td>{{user.stripe.subscription.plan.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Billing Interval</td>
+                            <td class="capitalize">{{user.stripe.subscription.plan.interval}}</td>
+                        </tr>
+                        <tr>
+                            <td>Subscription Status</td>
+                            <td class="capitalize">{{user.stripe.subscription.status}}</td>
+                        </tr>
+                        <tr ng-show="isTrialing(user)">
+                            <td>Trial End</td>
+                            <td>{{user.stripe.subscription.trial_end * 1000 | date}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
+
+            <div class="col-span-12">
+                <br>
+                <h4>Your Credit Card</h4>
+                <hr class="background-color-3 mini-hr">
+            </div>
             <form name="cardForm" class="clearfix">
+                <div class="col-span-12">
+                    <h4>Select Plan</h4>
+                    <div class="select-wrapper">
+                        <select name="user-plan" id="user-plan" ng-model="user.plan" ng-options="plan.value as plan.description for plan in plans"></select>
+                    </div>
+                </div>
+
+                <div class="col-span-12">
+                    <h4>Promotion Code</h4>
+                    <input type="text" placeholder="" ng-model="user.coupon"/>
+                </div>
+
                 <div class="col-span-12">
                     <h4>Card Number</h4>
                     <input type="text" placeholder="4242424242424242" ng-model="card.number" required/>
@@ -93,7 +148,9 @@
                 </div>
 
                 <div class="col-span-3">
-                    <button class="btn btn-large background-color-6" ng-click="saveSubscription('quiver100', card, user)" ng-disabled="!cardForm.$valid || !isValidCard(card) || cardForm.$pristine" >Subscribe</button>
+                    <button class="btn btn-large background-color-6" ng-click="saveSubscription(card, user); cardForm.$setPristine();" ng-disabled="!cardForm.$valid || !isValidCard(card) || cardForm.$pristine" >
+                        {{subscriptionMessage(user)}}
+                    </button>
                 </div>
             </form>
 
@@ -119,7 +176,7 @@
                 </div>
 
                 <div class="col-span-3">
-                    <button class="btn btn-large background-color-4" ng-click="saveStripe(user.stripe)" ng-disabled="!stripeForm.$valid || stripeForm.$pristine" >Save Stripe Settings</button>
+                    <button class="btn btn-large background-color-4" ng-click="saveStripe(user.stripe); stripeForm.$setPristine();" ng-disabled="!stripeForm.$valid || stripeForm.$pristine" >Save Stripe Settings</button>
                 </div>
             </form>
 

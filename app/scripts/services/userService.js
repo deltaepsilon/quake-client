@@ -16,6 +16,14 @@ angular.module('quiverApp')
         $http({method: 'GET', url: '/user'}).
           success(function (data, status, headers) {
             data.token = headers()['x-quake-token'];
+            $rootScope.user = data.user;
+            $rootScope.quake = {
+              token: data.token,
+              root: data.quakeRoot
+            };
+            $rootScope.stripe = {
+              pk: data.stripePK
+            }
             deferred.resolve(data);
           }).
           error(function (data, status) {
@@ -25,11 +33,11 @@ angular.module('quiverApp')
       },
 
       saveUser: function (user) {
-        return getResource('/user').save(user);
+        return getResource('/user').save(user, {}, $rootScope.noop, $rootScope.error);
       },
 
       createSubscription: function (user) {
-        return getResource('/user/subscribe').save(user);
+        return getResource('/user/subscribe').save(user, {}, $rootScope.noop, $rootScope.error);
       }
     };
   });
