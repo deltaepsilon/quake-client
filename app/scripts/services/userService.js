@@ -4,9 +4,9 @@ angular.module('quiverApp')
   .factory('userService', function ($q, $http, $resource, $rootScope) {
 
 
-    var getResource = function () {
+    var getResource = function (path) {
       $http.defaults.headers.common['authorization'] = 'Bearer ' + $rootScope.quake.token;
-      return $resource($rootScope.quake.root + '/user', {}, {save: {method: 'PUT'}});
+      return $resource($rootScope.quake.root + path, {}, {save: {method: 'PUT'}});
     };
 
     // Public API here
@@ -25,7 +25,11 @@ angular.module('quiverApp')
       },
 
       saveUser: function (user) {
-        return getResource().save(user);
+        return getResource('/user').save(user);
+      },
+
+      createSubscription: function (user) {
+        return getResource('/user/subscribe').save(user);
       }
     };
   });

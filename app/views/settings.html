@@ -50,7 +50,7 @@
                             <div class="btn btn-small thumbs-up background-color-6 circle"></div>
                         </div>
                         <div class="table-cell full-width listing-centered">
-                            Keep Your Content
+                            Need to Cancel? Keep Your Content
                             <div class="sub">Your account will stay active and you can continue to edit your content</div>
                         </div>
                     </li>
@@ -93,7 +93,7 @@
                 </div>
 
                 <div class="col-span-3">
-                    <button class="btn btn-large background-color-6" ng-click="saveSubscription('quiver100', card)" ng-disabled="!cardForm.$valid || !isValidCard(card) || cardForm.$pristine" >Subscribe</button>
+                    <button class="btn btn-large background-color-6" ng-click="saveSubscription('quiver100', card, user)" ng-disabled="!cardForm.$valid || !isValidCard(card) || cardForm.$pristine" >Subscribe</button>
                 </div>
             </form>
 

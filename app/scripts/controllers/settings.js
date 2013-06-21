@@ -39,8 +39,8 @@ angular.module('quiverApp')
       $scope.user = userService.saveUser({stripe: stripe});
     };
 
-    $scope.saveSubscription = function (id, card) {
-      stripeService.createQuiverSubscription(id, card).then(function (subscription) {
+    $scope.saveSubscription = function (id, card, user) {
+      stripeService.createQuiverSubscription(id, card, user).then(function (subscription) {
         var card = subscription.customer.card;
         $scope.card = {
           number: card.type + ' ************' + card.last4,
