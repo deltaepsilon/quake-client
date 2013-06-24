@@ -13,7 +13,8 @@
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/bootstrap.css">
     <link rel="stylesheet" href="styles/main.css">
-      <link rel="stylesheet" href="styles/angular-core.scss">
+    <link rel="stylesheet" href="styles/angular-core.scss">
+    <link rel="stylesheet" href="styles/quiver.scss">
     <!-- endbuild -->
   </head>
   <body ng-app="quiverApp">
@@ -39,6 +40,9 @@
                 <a class="btn btn-large pull-right" href='/logout'>Log Out</a>
             </div>
         </nav>
+        <div notification ng-click="hideNotifications()"></div>
+        <input ng-model="notification" type="text" placeholder="notification"/>
+        <button class="btn btn-large background-color-4" ng-click="addNotification(notification)">Add Notification</button>
 
         <div ng-view>
 
@@ -57,6 +61,7 @@
     <script src="scripts/controllers/settings.js"></script>
     <script src="scripts/controllers/feeds.js"></script>
     <script src="scripts/services/stripeService.js"></script>
+    <script src="scripts/directives/notification.js"></script>
     <!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

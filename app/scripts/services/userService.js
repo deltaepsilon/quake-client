@@ -36,8 +36,12 @@ angular.module('quiverApp')
         return getResource('/user').save(user, {}, $rootScope.noop, $rootScope.error);
       },
 
-      createSubscription: function (user) {
-        return getResource('/user/subscribe').save(user, {}, $rootScope.noop, $rootScope.error);
+      saveCard: function (user) {
+        return getResource('/user/subscribe').save(user, $rootScope.noop, $rootScope.error);
+      },
+
+      saveSubscription: function (user) {
+        return getResource('/user/subscribe').save(user, $rootScope.noop, $rootScope.error);
       }
     };
   });

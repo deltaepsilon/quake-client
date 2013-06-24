@@ -2,6 +2,8 @@
 
 angular.module('quiverApp')
   .controller('QuiverCtrl', function ($scope, $location, $rootScope, userService) {
+    $scope.notifications = [];
+
     $rootScope.noop = function () {};
 
     $rootScope.error = function (error) {
@@ -18,5 +20,8 @@ angular.module('quiverApp')
       return user && user.stripe && user.stripe.subscription && user.stripe.subscription.status === 'trialing';
     };
 
+    $scope.addNotification = function (notification) {
+      $scope.$emit('show notification', notification, 'error');
+    };
 
   });

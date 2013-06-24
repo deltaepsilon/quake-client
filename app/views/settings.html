@@ -86,23 +86,55 @@
                     <tbody>
                         <tr>
                             <td>Plan</td>
-                            <td>{{user.stripe.subscription.plan.name}}</td>
+                            <td>{{user.stripe.customer.subscription.plan.name}}</td>
                         </tr>
                         <tr>
                             <td>Billing Interval</td>
-                            <td class="capitalize">{{user.stripe.subscription.plan.interval}}</td>
+                            <td class="capitalize">{{user.stripe.customer.subscription.plan.interval}}</td>
                         </tr>
                         <tr>
                             <td>Subscription Status</td>
-                            <td class="capitalize">{{user.stripe.subscription.status}}</td>
+                            <td class="capitalize">{{user.stripe.customer.subscription.status}}</td>
                         </tr>
                         <tr ng-show="isTrialing(user)">
                             <td>Trial End</td>
-                            <td>{{user.stripe.subscription.trial_end * 1000 | date}}</td>
+                            <td>{{user.stripe.customer.subscription.trial_end * 1000 | date}}</td>
+                        </tr>
+                        <tr ng-show="user.stripe.customer.discount.coupon.percent_off">
+                            <td>Percent Off</td>
+                            <td>{{user.stripe.customer.discount.coupon.percent_off}}%</td>
+                        </tr>
+                        <tr ng-show="user.stripe.customer.discount.coupon.amount_off">
+                            <td>Amount Off</td>
+                            <td>{{user.stripe.customer.discount.coupon.amount_off/100 | currency}}</td>
+                        </tr>
+                        <tr ng-show="user.stripe.customer.discount.coupon.duration">
+                            <td>Coupon Duration</td>
+                            <td class="capitalize">{{user.stripe.customer.discount.coupon.duration}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+
+            <form name="subscriptionForm">
+                <div class="col-span-12">
+                    <h4>Select Plan</h4>
+                    <div class="select-wrapper">
+                        <select name="user-plan" id="user-plan" ng-model="user.stripe.plan" ng-options="plan.value as plan.description for plan in plans"></select>
+                    </div>
+                    <br>
+                </div>
+
+                <div class="col-span-12">
+                    <h4>Coupon Code</h4>
+                    <input type="text" placeholder="" ng-model="user.stripe.coupon"/>
+                </div>
+
+                <div class="col-span-3" ng-show="user.stripe.customer.subscription.plan">
+                    <button class="btn btn-large background-color-6" ng-click="saveSubscription(user); subscriptionForm.$setPristine();" ng-disabled="!subscriptionForm.$valid || subscriptionForm.$pristine" >Change Subscription</button>
+                </div>
+
+            </form>
 
 
             <div class="col-span-12">
@@ -112,15 +144,11 @@
             </div>
             <form name="cardForm" class="clearfix">
                 <div class="col-span-12">
-                    <h4>Select Plan</h4>
-                    <div class="select-wrapper">
-                        <select name="user-plan" id="user-plan" ng-model="user.plan" ng-options="plan.value as plan.description for plan in plans"></select>
-                    </div>
+                    <h4>Subscription: {{subscriptionName(user)}}</h4>
                 </div>
 
                 <div class="col-span-12">
-                    <h4>Promotion Code</h4>
-                    <input type="text" placeholder="" ng-model="user.coupon"/>
+                    <h4>PromotionCode: {{promotionCode(user)}}</h4>
                 </div>
 
                 <div class="col-span-12">
@@ -148,7 +176,7 @@
                 </div>
 
                 <div class="col-span-3">
-                    <button class="btn btn-large background-color-6" ng-click="saveSubscription(card, user); cardForm.$setPristine();" ng-disabled="!cardForm.$valid || !isValidCard(card) || cardForm.$pristine" >
+                    <button class="btn btn-large background-color-6" ng-click="saveCard(card, user); cardForm.$setPristine();" ng-disabled="!cardForm.$valid || !isValidCard(card) || cardForm.$pristine" >
                         {{subscriptionMessage(user)}}
                     </button>
                 </div>

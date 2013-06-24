@@ -29,17 +29,22 @@ angular.module('quiverApp')
         }, callback);
         return deferred.promise;
       },
-      createQuiverSubscription: function (card, user, plan) {
+      saveSubscription: function (user) {
+        if (!user.stripe.plan && user.stripe.customer && user.stripe.customer.subscription && user.stripe.customer.subscription.plan) {
+          user.stripe.plan = user.stripe.customer.subscription.plan.id;
+        }
+        return userService.saveSubscription(user);
+      },
+      saveCard: function (card, user) {
         var deferred = $q.defer();
         this.createCustomer(card, function (status, response) {
           if (response.error) {
             deferred.reject(response.error.message);
           } else {
             user.stripe = {
-              plan: plan,
               customer: response
             };
-            deferred.resolve(userService.createSubscription(user));
+            deferred.resolve(userService.saveCard(user));
             $rootScope.$digest();
           }
         });

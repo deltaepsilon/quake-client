@@ -44,8 +44,8 @@ angular.module('quiverApp')
 
     if ($scope.user) {
 
-      if ($scope.user.stripe && $scope.user.stripe.active_card) {
-        var activeCard = $scope.user.stripe.active_card;
+      if ($scope.user.stripe && $scope.user.stripe.customer && $scope.user.stripe.customer.active_card) {
+        var activeCard = $scope.user.stripe.customer.active_card;
         $scope.card = {
           number: activeCard.type + ' ************' + activeCard.last4,
           month: activeCard.exp_month,
@@ -56,6 +56,7 @@ angular.module('quiverApp')
 
       if (!$scope.user.plan) { // Default user.plan in case it hasn't been set
         $scope.user.plan = $scope.plans[0].value;
+        console.log('user.plan', $scope.user.plan);
       }
     }
 
@@ -67,8 +68,12 @@ angular.module('quiverApp')
       $scope.user = userService.saveUser({stripe: stripe});
     };
 
-    $scope.saveSubscription = function (card, user) {
-      stripeService.createQuiverSubscription(card, user, user.plan).then(function (user) {
+    $scope.saveSubscription = function (user) {
+      $scope.user = stripeService.saveSubscription(user);
+    };
+
+    $scope.saveCard = function (card, user) {
+      stripeService.saveCard(card, user).then(function (user) {
         if (user.stripe) {
           var card = user.stripe.customer.card;
           $scope.card = {
@@ -97,6 +102,33 @@ angular.module('quiverApp')
     $scope.subscriptionMessage = function (user) {
       return (user && user.stripe) ? "Update Subscription" : "Activate Subscription";
     }
+
+    $scope.subscriptionName = function (user) {
+      var value = user.plan,
+        i = $scope.plans.length;
+
+      if (!value && user.stripe && user.stripe.customer && user.stripe.customer.subscription && user.stripe.customer.subscription.plan) {
+        value = user.stripe.customer.subscription.plan.id;
+      }
+
+      while (i--) {
+        if ($scope.plans[i].value === value) {
+          return $scope.plans[i].description;
+        }
+      }
+    };
+
+    $scope.promotionCode = function (user) {
+      if (user.coupon) {
+         return user.coupon;
+      }
+
+      if (user && user.stripe && user.stripe.customer && user.stripe.customer.discount && user.stripe.customer.discount.coupon) {
+        return user.stripe.customer.discount.coupon.id;
+      }
+
+      return null;
+    };
 
 
   });
