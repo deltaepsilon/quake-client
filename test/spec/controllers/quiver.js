@@ -5,10 +5,6 @@ describe('Controller: QuiverCtrl', function () {
   // load the controller's module
   beforeEach(module('quiverApp'));
 
-  var QuiverCtrl,
-    scope,
-    rootScope;
-
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
@@ -21,12 +17,26 @@ describe('Controller: QuiverCtrl', function () {
       }},
       $rootScope: $rootScope,
       userService: {getUser: function () {
-        return {then: function (callback) {
-          callback({user: {name: "Chris"}, token: '123456', quakeRoot: 'localhost'});
-        }};
+        var payload = {user: {name: "Chris"}, token: '123456', quakeRoot: 'localhost'};
+        rootScope.user = payload.user;
+        rootScope.quake = {
+          token: payload.token,
+          root: payload.quakeRoot
+        };
       }}
     });
+
+    //Set up mock scope object
+    scope.$emit = function (event, message, type) {
+      return arguments
+    };
   }));
+
+  var QuiverCtrl,
+    scope,
+    rootScope,
+    trialingUser = {stripe: {customer: {subscription: {status: 'trialing'}}}},
+    subscribedUser = {stripe: {customer: {subscription: {status: 'subscribed'}}}};
 
   it('should attach a user to $scope.user', function () {
     expect(scope.user).toEqual({name: "Chris"});
@@ -35,5 +45,14 @@ describe('Controller: QuiverCtrl', function () {
   it('should attach a quake object to $rootScope', function () {
     expect(rootScope.quake.token).toBe('123456');
     expect(rootScope.quake.root).toBe('localhost');
+  });
+
+  it('should be trialing', function () {
+    expect(scope.isTrialing(trialingUser)).toBe(true);
+    expect(scope.isTrialing(subscribedUser)).toBe(false);
+  });
+
+  it('should emit a notification', function () {
+    expect(scope.addNotification('notify message', 'test')).toEqual({0: 'show notification', 1: 'notify message', 2: 'test'});
   });
 });

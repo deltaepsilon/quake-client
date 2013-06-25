@@ -54,22 +54,21 @@ angular.module('quiverApp')
         };
       }
 
-      if (!$scope.user.plan) { // Default user.plan in case it hasn't been set
-        $scope.user.plan = $scope.plans[0].value;
-        console.log('user.plan', $scope.user.plan);
+      if (!$scope.user.stripe.plan) { // Default user.plan in case it hasn't been set
+        $scope.user.stripe.plan = $scope.plans[0].value;
       }
     }
 
     $scope.saveUser = function (user) {
-      $scope.user = userService.saveUser(user);
+      return $scope.user = userService.saveUser(user);
     };
 
     $scope.saveStripe = function (stripe) {
-      $scope.user = userService.saveUser({stripe: stripe});
+      return $scope.user = userService.saveUser({stripe: stripe});
     };
 
     $scope.saveSubscription = function (user) {
-      $scope.user = stripeService.saveSubscription(user);
+      return $scope.user = stripeService.saveSubscription(user);
     };
 
     $scope.saveCard = function (card, user) {
@@ -96,7 +95,7 @@ angular.module('quiverApp')
     };
 
     $scope.isValidCard = function (card) {
-      return card && stripeService.isValidCardNumber(card.number) && stripeService.isValidCVC(card.cvc) && stripeService.isValidExpiry(card.month, card.year);
+      return !!(card && stripeService.isValidCardNumber(card.number) && stripeService.isValidCVC(card.cvc) && stripeService.isValidExpiry(card.month, card.year));
     };
 
     $scope.subscriptionMessage = function (user) {
@@ -118,7 +117,7 @@ angular.module('quiverApp')
       }
     };
 
-    $scope.promotionCode = function (user) {
+    $scope.couponCode = function (user) {
       if (user.coupon) {
          return user.coupon;
       }

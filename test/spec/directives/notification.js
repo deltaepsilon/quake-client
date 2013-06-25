@@ -1,7 +1,7 @@
 'use strict';
 
 describe('Directive: notification', function () {
-  beforeEach(module('testApp'));
+  beforeEach(module('quiverApp'));
 
   var element;
 

@@ -17,11 +17,11 @@ angular.module('quiverApp')
     };
 
     $scope.isTrialing = function (user) {
-      return user && user.stripe && user.stripe.subscription && user.stripe.subscription.status === 'trialing';
+      return !!(user && user.stripe && user.stripe.customer.subscription && user.stripe.customer.subscription.status === 'trialing');
     };
 
-    $scope.addNotification = function (notification) {
-      $scope.$emit('show notification', notification, 'error');
+    $scope.addNotification = function (notification, status) {
+      return $scope.$emit('show notification', notification, status || 'error');
     };
 
   });
