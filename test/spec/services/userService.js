@@ -8,7 +8,12 @@ describe('Service: userService', function () {
 
   // load the service's module
   beforeEach(module('quiverApp', function ($provide) {
-    $provide.value('$rootScope', {$get: function () {}, $evalAsync: function () {}, $apply: function () {}});
+    $provide.value('$rootScope', {
+      $get: function () {},
+      $evalAsync: function () {},
+      $apply: function () {},
+      noop: function(){},
+      error: function () {}});
   }));
 
   beforeEach(inject(function (_userService_) {
@@ -29,4 +34,19 @@ describe('Service: userService', function () {
       $httpBackend.flush();
 
     }));
+
+  it('should save users', function () {
+    var mockUser = {};
+    expect({stripe: {}}).toEqual(mockUser);
+  });
+
+  it('should save cards', function () {
+    var mockCard = {};
+    expect({card: {}}).toEqual(mockCard);
+  });
+
+  it('should save subscriptions', function () {
+    var mockSubscription = {};
+    expect({subscription: {}}).toEqual(mockSubscription);
+  });
 });
