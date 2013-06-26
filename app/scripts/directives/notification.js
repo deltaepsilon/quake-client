@@ -1,14 +1,12 @@
 'use strict';
 
 angular.module('quiverApp')
-  .directive('notification', function ($timeout, $compile) {
+  .directive('notification', function ($timeout) {
     return {
-//      template: '<h4 class="notification" ng-class="notificationClass" ng-show="showNotification">{{message}}</h4>',
-      template: '<ul id="quiver-notifications" ng-show="showNotifications"><li ng-repeat="notification in notifications" class="{{notification.class}}">{{notification.message}}</li></ul>',
+      template: '<ul id="quiver-notifications" class="listing light-text" ng-show="showNotifications"><li ng-repeat="notification in notifications" class="{{notification.class}}">{{notification.message}}</li></ul>',
       restrict: 'A',
       replace: true,
-      link: function postLink(scope, element, attrs) {
-
+      link: function postLink(scope) {
         scope.hideNotifications = function () {
           scope.notifications = [];
           scope.showNotifications = false;
@@ -21,13 +19,10 @@ angular.module('quiverApp')
 
           $timeout(function () {
             scope.notifications.shift();
-          }, 5000);
+          }, 3000);
         });
 
         scope.$on('hide notification', scope.hideNotifications);
-
-      },
-      controller: function () {
 
       }
     };

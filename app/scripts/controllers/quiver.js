@@ -6,8 +6,28 @@ angular.module('quiverApp')
 
     $rootScope.noop = function () {};
 
-    $rootScope.error = function (error) {
-      console.log('error', error);
+    $rootScope.success = function (success) {
+      $rootScope.error('Saved', 'success');
+    };
+
+    $rootScope.error = function (error, notificationClass) {
+      var message = error,
+        errorClass = notificationClass || 'error';
+
+      console.log('incoming error', error);
+
+      if (error.status) {
+//        message = error.status + ':';
+        if (error.data) {
+          message = ''; //Don't show status... it looks tacky
+          if (error.data.error) {
+            message += error.data.error;
+          } else {
+            message += error.data;
+          }
+        }
+      }
+      $scope.$emit('show notification', message, errorClass);
     };
 
     userService.getUser(); // Get user data
@@ -17,11 +37,7 @@ angular.module('quiverApp')
     };
 
     $scope.isTrialing = function (user) {
-      return !!(user && user.stripe && user.stripe.customer.subscription && user.stripe.customer.subscription.status === 'trialing');
-    };
-
-    $scope.addNotification = function (notification, status) {
-      return $scope.$emit('show notification', notification, status || 'error');
+      return !!(user && user.stripe && user.stripe.customer && user.stripe.customer.subscription && user.stripe.customer.subscription.status === 'trialing');
     };
 
   });

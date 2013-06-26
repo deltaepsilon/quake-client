@@ -79,7 +79,7 @@
         </div>
         <div class="panel-primary">
 
-            <div class="col-span-12" ng-show="user.stripe">
+            <div class="col-span-12" ng-show="user.stripe.customer.subscription">
                 <h4>Your Subscription</h4>
                 <hr class="background-color-6 mini-hr">
                 <table class="table-dark light-text">
@@ -143,12 +143,12 @@
                 <hr class="background-color-3 mini-hr">
             </div>
             <form name="cardForm" class="clearfix">
-                <div class="col-span-12">
+                <div class="col-span-12" ng-show="subscriptionName(user)">
                     <h4>Subscription: {{subscriptionName(user)}}</h4>
                 </div>
 
-                <div class="col-span-12">
-                    <h4>PromotionCode: {{couponCode(user)}}</h4>
+                <div class="col-span-12" ng-show="couponCode(user)">
+                    <h4>Coupon: {{couponCode(user)}}</h4>
                 </div>
 
                 <div class="col-span-12">
@@ -176,7 +176,7 @@
                 </div>
 
                 <div class="col-span-3">
-                    <button class="btn btn-large background-color-6" ng-click="saveCard(card, user); cardForm.$setPristine();" ng-disabled="!cardForm.$valid || !isValidCard(card) || cardForm.$pristine" >
+                    <button class="btn btn-large background-color-6" ng-click="saveCard(card, user); cardForm.$setPristine();" ng-disabled="!cardForm.$valid || !isValidCard(card) || cardForm.$pristine || !subscriptionName(user)" >
                         {{subscriptionMessage(user)}}
                     </button>
                 </div>
@@ -195,16 +195,16 @@
             <form name="stripeForm" class="clearfix">
                 <div class="col-span-12">
                     <h4>Stripe Secret Key</h4>
-                    <input type="text" placeholder="sk_live_RaNdOmNoNsEnSe" ng-model="user.stripe.secretKey"/>
+                    <input type="text" placeholder="sk_live_RaNdOmNoNsEnSe" ng-model="user.stripeKeys.secretKey"/>
                 </div>
 
                 <div class="col-span-12">
                     <h4>Stripe Publishable Key</h4>
-                    <input type="text" placeholder="pk_live_RaNdOmNoNsEnSe" ng-model="user.stripe.publicKey"/>
+                    <input type="text" placeholder="pk_live_RaNdOmNoNsEnSe" ng-model="user.stripeKeys.publicKey"/>
                 </div>
 
                 <div class="col-span-3">
-                    <button class="btn btn-large background-color-4" ng-click="saveStripe(user.stripe); stripeForm.$setPristine();" ng-disabled="!stripeForm.$valid || stripeForm.$pristine" >Save Stripe Settings</button>
+                    <button class="btn btn-large background-color-4" ng-click="saveUser(user); stripeForm.$setPristine();" ng-disabled="!stripeForm.$valid || stripeForm.$pristine" >Save Stripe Settings</button>
                 </div>
             </form>
 

@@ -13,8 +13,6 @@
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/bootstrap.css">
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/angular-core.scss">
-    <link rel="stylesheet" href="styles/quiver.scss">
     <!-- endbuild -->
   </head>
   <body ng-app="quiverApp">
@@ -41,8 +39,6 @@
             </div>
         </nav>
         <div notification ng-click="hideNotifications()"></div>
-        <input ng-model="notification" type="text" placeholder="notification"/>
-        <button class="btn btn-large background-color-4" ng-click="addNotification(notification)">Add Notification</button>
 
         <div ng-view>
 

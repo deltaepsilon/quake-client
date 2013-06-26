@@ -32,9 +32,9 @@ angular.module('quiverApp')
     $scope.years = getYears();
 
     $scope.plans = [
-      {value: 'quiver0', description: "Quiver Preview $0/Month"},
-      {value: 'quiver30', description: "Quiver Basic $30/Month"},
-      {value: 'quiver100', description: "Quiver Pro $100/Month"}
+      {value: 'quiver0', description: 'Quiver Preview $0/Month'},
+      {value: 'quiver30', description: 'Quiver Basic $30/Month'},
+      {value: 'quiver100', description: 'Quiver Pro $100/Month'}
     ];
 
     $scope.card = {
@@ -54,21 +54,24 @@ angular.module('quiverApp')
         };
       }
 
-      if (!$scope.user.stripe.plan) { // Default user.plan in case it hasn't been set
+      if ($scope.user && $scope.user.stripe && !$scope.user.stripe.plan) { // Default user.plan in case it hasn't been set
         $scope.user.stripe.plan = $scope.plans[0].value;
       }
     }
 
     $scope.saveUser = function (user) {
-      return $scope.user = userService.saveUser(user);
+      $scope.user = userService.saveUser(user);
+      return $scope.user;
     };
 
-    $scope.saveStripe = function (stripe) {
-      return $scope.user = userService.saveUser({stripe: stripe});
+    $scope.saveStripe = function (user) {
+      $scope.user = userService.saveUser(user);
+      return $scope.user;
     };
 
     $scope.saveSubscription = function (user) {
-      return $scope.user = stripeService.saveSubscription(user);
+      $scope.user = stripeService.saveSubscription(user);
+      return $scope.user;
     };
 
     $scope.saveCard = function (card, user) {
@@ -99,11 +102,11 @@ angular.module('quiverApp')
     };
 
     $scope.subscriptionMessage = function (user) {
-      return (user && user.stripe) ? "Update Subscription" : "Activate Subscription";
-    }
+      return (user && user.stripe) ? 'Update Subscription' : 'Activate Subscription';
+    };
 
     $scope.subscriptionName = function (user) {
-      var value = user.plan,
+      var value = (user && user.stripe) ? user.stripe.plan : null,
         i = $scope.plans.length;
 
       if (!value && user.stripe && user.stripe.customer && user.stripe.customer.subscription && user.stripe.customer.subscription.plan) {
@@ -118,8 +121,8 @@ angular.module('quiverApp')
     };
 
     $scope.couponCode = function (user) {
-      if (user.coupon) {
-         return user.coupon;
+      if (user && user.stripe && user.stripe.coupon) {
+        return user.coupon;
       }
 
       if (user && user.stripe && user.stripe.customer && user.stripe.customer.discount && user.stripe.customer.discount.coupon) {

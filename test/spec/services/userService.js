@@ -40,21 +40,26 @@ describe('Service: userService', function () {
     }));
 
   it('should save users', inject(function ($httpBackend, userService) {
-    var mockUser = {stripe: {customer: {}}},
-      response;
-    $httpBackend.when('PUT', 'http://localhost/user').respond(mockUser);
-    response = userService.saveUser(mockUser);
+    var response;
+    $httpBackend.when('PUT', 'http://localhost/user').respond({});
+    response = userService.saveUser({});
     $httpBackend.flush();
-    expect(response).toEqual(mockUser);
+    expect(Object.keys(response).length).toBe(0);
   }));
 
-  it('should save cards', function () {
-    var mockCard = {};
-    expect({card: {}}).toEqual(mockCard);
-  });
+  it('should save cards', inject(function ($httpBackend) {
+    var response;
+    $httpBackend.when('PUT', 'http://localhost/user/subscribe').respond({});
+    response = userService.saveCard({});
+    $httpBackend.flush();
+    expect(Object.keys(response).length).toBe(0);
+  }));
 
-  it('should save subscriptions', function () {
-    var mockSubscription = {};
-    expect({subscription: {}}).toEqual(mockSubscription);
-  });
+  it('should save subscriptions', inject(function ($httpBackend) {
+    var response;
+    $httpBackend.when('PUT', 'http://localhost/user/subscribe').respond({});
+    response = userService.saveSubscription({});
+    $httpBackend.flush();
+    expect(Object.keys(response).length).toBe(0);
+  }));
 });

@@ -33,7 +33,7 @@ module.exports = function (grunt) {
       },
       compass: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-        tasks: ['compass']
+        tasks: ['compass:dev', 'concat:dev']
       },
       livereload: {
         files: [
@@ -140,14 +140,23 @@ module.exports = function (grunt) {
         importPath: '<%= yeoman.app %>/components',
         relativeAssets: true
       },
-      dist: {},
-      server: {
-        options: {
-          debugInfo: true
-        }
-      }
+      dev: {
+        sassDir: 'app/styles/scss',
+        cssDir: 'app/styles',
+        environment: 'development'
+      },
+      dist: {}
+//      server: {
+//        options: {
+//          debugInfo: true
+//        }
+//      }
     },
     concat: {
+      dev: {
+        src: ['.tmp/styles/scss/*.css'],
+        dest: '<%= yeoman.app %>/styles/main.css'
+      },
       dist: {
         files: {
           '<%= yeoman.dist %>/scripts/scripts.js': [
@@ -308,7 +317,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('dist', [
     'clean:dist',
-    'jshint',
+//    'jshint',
     'coffee',
     'compass:dist',
     'useminPrepare',
@@ -326,7 +335,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('quiver', [
     'open',
-    'watch',
+    'watch'
   ]);
 
   grunt.registerTask('default', ['build']);

@@ -41,9 +41,7 @@ angular.module('quiverApp')
           if (response.error) {
             deferred.reject(response.error.message);
           } else {
-            user.stripe = {
-              customer: response
-            };
+            user.stripe.customer = response;
             deferred.resolve(userService.saveCard(user));
             $rootScope.$digest();
           }

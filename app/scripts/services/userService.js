@@ -5,7 +5,7 @@ angular.module('quiverApp')
 
 
     var getResource = function (path) {
-      $http.defaults.headers.common['authorization'] = 'Bearer ' + $rootScope.quake.token;
+      $http.defaults.headers.common.authorization = 'Bearer ' + $rootScope.quake.token;
       return $resource($rootScope.quake.root + path, {}, {save: {method: 'PUT'}});
     };
 
@@ -23,7 +23,7 @@ angular.module('quiverApp')
             };
             $rootScope.stripe = {
               pk: data.stripePK
-            }
+            };
             deferred.resolve(data);
           }).
           error(function (data, status) {
@@ -33,15 +33,15 @@ angular.module('quiverApp')
       },
 
       saveUser: function (user) {
-        return getResource('/user').save(user, {}, $rootScope.noop, $rootScope.error);
+        return getResource('/user').save(user, $rootScope.success, $rootScope.error);
       },
 
       saveCard: function (user) {
-        return getResource('/user/subscribe').save(user, $rootScope.noop, $rootScope.error);
+        return getResource('/user/subscribe').save(user, $rootScope.success, $rootScope.error);
       },
 
       saveSubscription: function (user) {
-        return getResource('/user/subscribe').save(user, $rootScope.noop, $rootScope.error);
+        return this.saveCard(user);
       }
     };
   });
