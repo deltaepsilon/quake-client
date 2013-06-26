@@ -13,19 +13,23 @@ describe('Service: userService', function () {
       $evalAsync: function () {},
       $apply: function () {},
       noop: function(){},
-      error: function () {}});
+      error: function () {},
+      quake: {
+        token: '1234',
+        root: 'http://localhost'
+      }
+    });
   }));
 
   beforeEach(inject(function (_userService_) {
     userService = _userService_;
   }));
 
-  it('should do something', inject(function ($httpBackend, $injector) {
+  it('should return a user', inject(function ($httpBackend, $injector) {
       var mockResponse = {user: {name: "Chris"}, quakeRoot: "localhost"},
         mockToken = {'x-quake-token': '123456'};
       $httpBackend.when('GET', '/user').respond(mockResponse, mockToken);
       userService = $injector.get('userService');
-      console.log('****************', userService);
       userService.getUser().then(function (result) {
         expect(result.token).toBe('123456');
         expect(result.user).toEqual({name: "Chris"});
@@ -35,10 +39,14 @@ describe('Service: userService', function () {
 
     }));
 
-  it('should save users', function () {
-    var mockUser = {};
-    expect({stripe: {}}).toEqual(mockUser);
-  });
+  it('should save users', inject(function ($httpBackend, userService) {
+    var mockUser = {stripe: {customer: {}}},
+      response;
+    $httpBackend.when('PUT', 'http://localhost/user').respond(mockUser);
+    response = userService.saveUser(mockUser);
+    $httpBackend.flush();
+    expect(response).toEqual(mockUser);
+  }));
 
   it('should save cards', function () {
     var mockCard = {};
