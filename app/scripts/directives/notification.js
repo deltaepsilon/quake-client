@@ -7,6 +7,10 @@ angular.module('quiverApp')
       restrict: 'A',
       replace: true,
       link: function postLink(scope) {
+        if (!scope.notifications) {
+          scope.notifications = [];
+        }
+
         scope.hideNotifications = function () {
           scope.notifications = [];
           scope.showNotifications = false;

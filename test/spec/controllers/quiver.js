@@ -53,6 +53,8 @@ describe('Controller: QuiverCtrl', function () {
   });
 
   it('should emit a notification', function () {
-    expect(scope.addNotification('notify message', 'test')).toEqual({0: 'show notification', 1: 'notify message', 2: 'test'});
+    var notification = 'notificationing',
+      error = 'errorific';
+    expect(scope.error(notification, error)).toEqual(['show notification', notification, error]);
   });
 });

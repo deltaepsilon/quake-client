@@ -84,7 +84,7 @@ describe('Controller: SettingsCtrl', function () {
   });
 
   it('should save saveStripe', function () {
-    expect(scope.saveStripe({customer: {}})).toEqual({stripe: {customer: {}}});
+    expect(scope.saveStripe({stripe: {customer: {}}})).toEqual({stripe: {customer: {}}});
   });
 
   it('should save subscription', function () {
@@ -115,10 +115,10 @@ describe('Controller: SettingsCtrl', function () {
   });
 
   it('should return valid coupon codes', function () {
-    var user = {coupon: 'code', stripe: {customer: {discount: {coupon: {id: 'code2'}}}}};
+    var user = {stripe: {coupon: 'code', customer: {discount: {coupon: {id: 'code2'}}}}};
     expect(scope.couponCode(user)).toBe('code');
 
-    user.coupon = undefined;
+    user.stripe.coupon = undefined;
     expect(scope.couponCode(user)).toBe('code2');
   });
 });

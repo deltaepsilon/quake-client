@@ -122,7 +122,7 @@ angular.module('quiverApp')
 
     $scope.couponCode = function (user) {
       if (user && user.stripe && user.stripe.coupon) {
-        return user.coupon;
+        return user.stripe.coupon;
       }
 
       if (user && user.stripe && user.stripe.customer && user.stripe.customer.discount && user.stripe.customer.discount.coupon) {

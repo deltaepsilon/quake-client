@@ -14,8 +14,6 @@ angular.module('quiverApp')
       var message = error,
         errorClass = notificationClass || 'error';
 
-      console.log('incoming error', error);
-
       if (error.status) {
 //        message = error.status + ':';
         if (error.data) {
@@ -27,7 +25,7 @@ angular.module('quiverApp')
           }
         }
       }
-      $scope.$emit('show notification', message, errorClass);
+      return $scope.$emit('show notification', message, errorClass);
     };
 
     userService.getUser(); // Get user data
