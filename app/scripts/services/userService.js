@@ -11,24 +11,29 @@ angular.module('quiverApp')
 
     // Public API here
     return {
-      getUser: function () {
+      getUser: function (refresh) {
         var deferred = $q.defer();
-        $http({method: 'GET', url: '/user'}).
-          success(function (data, status, headers) {
-            data.token = headers()['x-quake-token'];
-            $rootScope.user = data.user;
-            $rootScope.quake = {
-              token: data.token,
-              root: data.quakeRoot
-            };
-            $rootScope.stripe = {
-              pk: data.stripePK
-            };
-            deferred.resolve(data);
-          }).
-          error(function (data, status) {
-            deferred.reject(data, status);
-          });
+        if (!refresh && $rootScope.user && $rootScope.quake && $rootScope.quake.token && $rootScope.quake.root) {
+          deferred.resolve({user: $rootScope.user, quake: {token: $rootScope.quake.token, root: $rootScope.quake.root}});
+        } else {
+          $http({method: 'GET', url: '/user'}).
+            success(function (data, status, headers) {
+              data.token = headers()['x-quake-token'];
+              $rootScope.user = data.user;
+              $rootScope.quake = {
+                token: data.token,
+                root: data.quakeRoot
+              };
+              $rootScope.stripe = {
+                pk: data.stripePK
+              };
+              deferred.resolve(data);
+            }).
+            error(function (data, status) {
+              deferred.reject(data, status);
+            });
+        }
+
         return deferred.promise;
       },
 

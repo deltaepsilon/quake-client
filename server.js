@@ -4,7 +4,8 @@ var express = require('express'),
   RedisStore = require('connect-redis')(express),
   redis = require('redis').createClient(),
   colors = require('colors'),
-  fs = require('fs')
+  fs = require('fs'),
+  md5 = require('md5'),
   quiverAuth = require('quiver-auth'),
   quake = require('quake-sdk'),
   _ = require('underscore'),
@@ -65,6 +66,7 @@ function deserialize (obj, done) {
 app.get('/', quiverAuth(serialize, deserialize));
 app.all('/user', quiverAuth(serialize, deserialize));
 app.get('/logout', quiverAuth(serialize, deserialize));
+app.get('/admin', quiverAuth(serialize, deserialize));
 
 
 app.get('/', function(req, res, next) {
@@ -99,6 +101,14 @@ app.get('/user', function (req, res) {
     });
   }
 });
+
+// Admin
+app.all('/admin.html', express.basicAuth(function (user, pass) {
+  var userHash = conf.get('admin_user'),
+    passHash = conf.get('admin_pass');
+//  console.log(md5.digest_s(user), md5.digest_s(pass), userHash === md5.digest_s(user) && passHash === md5.digest_s(pass));
+  return userHash === md5.digest_s(user) && passHash === md5.digest_s(pass);
+}));
 
 
 

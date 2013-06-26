@@ -37,7 +37,9 @@
     "handlebars": "~1.0.12",
     "connect-redis": "~1.4.5",
     "redis": "~0.8.3",
-    "underscore": "~1.4.4"
+    "underscore": "~1.4.4",
+    "node-md5": "0.0.1",
+    "md5": "~1.0.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

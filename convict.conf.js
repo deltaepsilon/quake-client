@@ -47,6 +47,18 @@ var convict = require('convict'),
       format: "*",
       default: "You should really change this",
       env: "QUIVER_SESSION_SECRET"
+    },
+    admin_user: {
+      doc: "Quiver admin user hash",
+      format: "*",
+      default: "You really suck if you cannot change this",
+      env: "QUIVER_ADMIN_USER"
+    },
+    admin_pass: {
+      doc: "Quiver admin password hash",
+      format: "*",
+      default: "You really suck if you cannot change this",
+      env: "QUIVER_ADMIN_PASS"
     }
   });
 
