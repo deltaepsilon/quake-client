@@ -6,6 +6,7 @@ var express = require('express'),
   colors = require('colors'),
   fs = require('fs'),
   md5 = require('md5'),
+  querystring = require('querystring'),
   quiverAuth = require('quiver-auth'),
   quake = require('quake-sdk'),
   _ = require('underscore'),
@@ -71,7 +72,10 @@ app.get('/admin', quiverAuth(serialize, deserialize));
 
 app.get('/', function(req, res, next) {
   var user = req.session.passport.user;
-  if (!user) {
+
+  if (req.query && req.query.admin) { // Admin param-forced redirect
+    return res.redirect('/admin.html?' + querystring.stringify(req.query));
+  } else if (!user) {
     return renderTemplate(res, 'login');
   }
   next();
