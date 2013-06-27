@@ -5,7 +5,7 @@ angular.module('quiverApp', ['ngResource'])
     var search = location.search,
       searchREGEX = /(\w+=[^&]+)/g,
       getQuery = function () {
-        var pairs = search.match(searchREGEX),
+        var pairs = search.match(searchREGEX) || [],
           pair,
           result = {},
           i = pairs.length;
