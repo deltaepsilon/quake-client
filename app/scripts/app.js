@@ -52,9 +52,19 @@ angular.module('quiverApp', ['ngResource'])
         templateUrl: 'views/admin/customers.html',
         controller: 'AdminCustomersCtrl',
         resolve: {
-          query: function () {
+          customers: function ($q, $rootScope, stripeService) {
+            var $deferred = $q.defer();
             console.log('returning query', query);
-            return query;
+            if (!($rootScope.query)) {
+              $rootScope.query = query;
+            }
+
+            stripeService.listCustomers().then(function (customers) {
+              console.log('customers from app.js', customers);
+              deferred.resolve(customers);
+            });
+
+            return deferred.promise;
           }
         }
       })

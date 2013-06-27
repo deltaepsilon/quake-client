@@ -9,6 +9,10 @@ module.exports = function (grunt) {
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-nodemon');
+
 
   // configurable paths
   var yeomanConfig = {
@@ -23,27 +27,27 @@ module.exports = function (grunt) {
   grunt.initConfig({
     yeoman: yeomanConfig,
     watch: {
-      coffee: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
-        tasks: ['coffee:dist']
-      },
-      coffeeTest: {
-        files: ['test/spec/{,*/}*.coffee'],
-        tasks: ['coffee:test']
-      },
+//      coffee: {
+//        files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
+//        tasks: ['coffee:dist']
+//      },
+//      coffeeTest: {
+//        files: ['test/spec/{,*/}*.coffee'],
+//        tasks: ['coffee:test']
+//      },
       compass: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass:dev', 'concat:dev']
       },
-      livereload: {
-        files: [
-          '<%= yeoman.app %>/{,*/}*.html',
-          '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
-          '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-        ],
-        tasks: []
-      },
+//      livereload: {
+//        files: [
+//          '<%= yeoman.app %>/{,*/}*.html',
+//          '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
+//          '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
+//          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+//        ],
+//        tasks: []
+//      },
       nodeunitTest: {
         files: ['server.js', 'server-test.js'],
         tasks: ['nodeunit']
@@ -275,6 +279,28 @@ module.exports = function (grunt) {
     },
     nodeunit: {
       all: ['server-test.js']
+    },
+    shell: {
+      debug: {
+        command: 'node-inspector'
+      }
+    },
+    nodemon: {
+      debug: {
+        options: {
+          file: 'server.js',
+          ignoredFiles: ['app/**/*', 'app/*', 'node_modules/**/*', 'node_modules/*', 'dist/**/*', 'dist/*', 'test/**/*', 'test/*'],
+          debug: false
+        }
+      }
+    },
+    concurrent: {
+      target: {
+        tasks: ['nodemon', 'watch'],
+        options: {
+          logConcurrentOutput: true
+        }
+      }
     }
   });
 

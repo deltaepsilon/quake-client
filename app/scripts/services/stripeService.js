@@ -11,6 +11,17 @@ angular.module('quiverApp')
     var getResource = function () {
       $http.defaults.headers.common['authorization'] = 'Bearer ' + $rootScope.quake.token;
       return $resource($rootScope.quake.root + '/user/subscribe', {}, {save: {method: 'PUT'}});
+    },
+    getStripeHeaders = function (headers) {
+      if (!headers) {
+        headers = {};
+      }
+      if (!($rootScope.query && $rootScope.query.stripeSK)) {
+        return false;
+      }
+
+      headers.Authorization = 'Basic ' + $rootScope.query.stripeSK;
+      return headers;
     };
 
     // Public API here
@@ -63,6 +74,25 @@ angular.module('quiverApp')
         } else {
           return Stripe.card.cardType(number);
         }
+      },
+      listCustomers: function (count, offset) {
+        var deferred = $q.defer(),
+          headers = getStripeHeaders();
+        if (!headers) {
+          return $scope.error("You are missing your stripe secret key. You'll want to add that as a query param, i.e., ?stripeSK=1234");
+        }
+
+        $http({method: 'GET', url: 'https://api.stripe.com/v1/customers', data: {count: count || 10, offset: 0 || 10}, headers: headers}).
+          success(function (err, customers) {
+            console.log('customers', err, customers);
+            deferred.resolve(customers);
+          }).
+          error(function (err) {
+            console.log('customers error', err);
+            $scope.error(err);
+            deferred.reject(err)
+          });
+        return deferred.promise;
       }
     };
   });
