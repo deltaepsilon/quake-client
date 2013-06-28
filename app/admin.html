@@ -29,19 +29,8 @@
         <div ng-controller="QuiverCtrl">
             <nav>
                 <div class="menu btn-group background-color-000 full-width" qv-active='qv-active-route'>
-                    <div class="table-cell">
-                        <div class="btn btn-large background-color-hover-1" ng-click="changeLocation('/admin-customers')" qv-active-route="/customers">Customers</div>
-                    </div>
-
-                    <div class="table-cell full-width">
-                        <div class="input-search-wrapper background-color-1">
-                            <input type="search" ng-model="admin.stripe.sk" class="input-search" placeholder="Stripe Secret Key"/>
-                        </div>
-
-                    </div>
-                    <div class="table-cell">
-                        <a class="btn btn-large pull-right background-color-hover-3" href='/logout'>Log Out</a>
-                    </div>
+                    <div class="btn btn-large background-color-hover-1" ng-click="changeLocation('/admin-customers')" qv-active-route="/customers">Customers</div>
+                    <a class="btn btn-large pull-right background-color-hover-3" href='/logout'>Log Out</a>
 
                 </div>
             </nav>
@@ -67,6 +56,7 @@
         <script src="scripts/directives/notification.js"></script>
         <script src="scripts/directives/qvActive.js"></script>
         <script src="scripts/controllers/admin/customers.js"></script>
+        <script src="scripts/directives/qvTable.js"></script>
         <!-- endbuild -->
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

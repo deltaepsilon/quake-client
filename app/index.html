@@ -29,7 +29,7 @@
     <div ng-controller="QuiverCtrl">
         <nav>
             <div class="menu btn-group background-color-000 full-width" qv-active='qv-active-route'>
-                <a class="btn btn-small gears background-color-hover-1" ng-click="changeLocation('/settings')" qv-active-route="/settings"></a>
+                <div class="btn btn-small gears background-color-hover-1" ng-click="changeLocation('/settings')" qv-active-route="/settings"></div>
                 <div class="btn btn-large background-color-hover-1" ng-click="changeLocation('/write')" qv-active-route="/write">Write</div>
                 <div class="btn btn-large background-color-hover-1" ng-click="changeLocation('/read')" qv-active-route="/read">Read</div>
                 <div class="btn btn-large background-color-hover-1" ng-click="changeLocation('/feeds')" qv-active-route="/feeds">Feeds</div>
@@ -59,6 +59,7 @@
     <script src="scripts/services/stripeService.js"></script>
     <script src="scripts/directives/notification.js"></script>
     <script src="scripts/directives/qvActive.js"></script>
+    <script src="scripts/directives/qvTable.js"></script>
     <!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

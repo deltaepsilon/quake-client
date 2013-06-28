@@ -364,5 +364,7 @@ module.exports = function (grunt) {
     'watch'
   ]);
 
+  grunt.registerTask('start', ['concurrent']);
+
   grunt.registerTask('default', ['build']);
 };
