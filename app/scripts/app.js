@@ -55,7 +55,6 @@ angular.module('quiverApp', ['ngResource'])
             var deferred = $q.defer();
             userDependency($q, userService).then(function () {
               stripeService.listCustomers().then(function (customers) {
-                console.log('customers from app.js', customers);
                 deferred.resolve(customers);
               });
 
