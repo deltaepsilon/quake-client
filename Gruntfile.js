@@ -289,7 +289,7 @@ module.exports = function (grunt) {
       debug: {
         options: {
           file: 'server.js',
-          ignoredFiles: ['app/**/*', 'app/*', 'node_modules/**/*', 'node_modules/*', 'dist/**/*', 'dist/*', 'test/**/*', 'test/*'],
+          ignoredFiles: ['app/**/*', 'app/*', 'node_modules/**/*', 'node_modules/*', 'dist/**/*', 'dist/*', 'test/**/*', 'test/*', '.idea/**/*', '.idea/*'],
           debug: false
         }
       }

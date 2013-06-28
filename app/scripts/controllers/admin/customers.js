@@ -1,12 +1,7 @@
 'use strict';
 
 angular.module('quiverApp')
-  .controller('AdminCustomersCtrl', function ($scope) {
-    console.log('scope.query', $scope.query, $scope.customers);
+  .controller('AdminCustomersCtrl', function ($scope, customers) {
+    $scope.customers = customers;
 
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
   });
