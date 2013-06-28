@@ -25,7 +25,6 @@ angular.module('quiverApp', ['ngResource'])
       };
 
 
-    console.log('querysdfsf', query);
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html'
@@ -52,18 +51,15 @@ angular.module('quiverApp', ['ngResource'])
         templateUrl: 'views/admin/customers.html',
         controller: 'AdminCustomersCtrl',
         resolve: {
-          customers: function ($q, $rootScope, stripeService) {
-            var $deferred = $q.defer();
-            console.log('returning query', query);
-            if (!($rootScope.query)) {
-              $rootScope.query = query;
-            }
+          customers: function ($q, $rootScope, userService, stripeService) {
+            var deferred = $q.defer();
+            userDependency($q, userService).then(function () {
+              stripeService.listCustomers().then(function (customers) {
+                console.log('customers from app.js', customers);
+                deferred.resolve(customers);
+              });
 
-            stripeService.listCustomers().then(function (customers) {
-              console.log('customers from app.js', customers);
-              deferred.resolve(customers);
             });
-
             return deferred.promise;
           }
         }

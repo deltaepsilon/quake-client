@@ -8,21 +8,20 @@ angular.module('quiverApp')
     // Service logic
     // ...
 
-    var getResource = function () {
-      $http.defaults.headers.common['authorization'] = 'Bearer ' + $rootScope.quake.token;
-      return $resource($rootScope.quake.root + '/user/subscribe', {}, {save: {method: 'PUT'}});
-    },
-    getStripeHeaders = function (headers) {
-      if (!headers) {
-        headers = {};
-      }
-      if (!($rootScope.query && $rootScope.query.stripeSK)) {
+    var setHeader = function () {
+        if ($rootScope && $rootScope.quake && $rootScope.quake.token) {
+          $http.defaults.headers.common.authorization = 'Bearer ' + $rootScope.quake.token;
+          return true;
+        }
         return false;
-      }
 
-      headers.Authorization = 'Basic ' + $rootScope.query.stripeSK;
-      return headers;
-    };
+      },
+      getUrl = function (path) {
+        if ($rootScope && $rootScope.quake && $rootScope.quake.root) {
+          return $rootScope.quake.root + path;
+        }
+        return false;
+      };
 
     // Public API here
     return {
@@ -76,22 +75,26 @@ angular.module('quiverApp')
         }
       },
       listCustomers: function (count, offset) {
-        var deferred = $q.defer(),
-          headers = getStripeHeaders();
-        if (!headers) {
-          return $scope.error("You are missing your stripe secret key. You'll want to add that as a query param, i.e., ?stripeSK=1234");
+        var deferred = $q.defer();
+
+        if (!setHeader()) {
+          deferred.reject($rootScope.error("You are missing your Quake token, so this request will fail."))
+        } else {
+          $http({method: 'GET', url: getUrl('/stripe/customers'), data: {count: count || 10, offset: 0 || 10}}).
+            success(function (response, status) {
+              if (status !== 200 || !response || response.object !== 'list') {
+                deferred.reject(response);
+              } else {
+                deferred.resolve(response.data);
+              }
+
+            }).
+            error(function (err) {
+              console.log('customers error', err);
+              deferred.reject($rootScope.error(err));
+            });
         }
 
-        $http({method: 'GET', url: 'https://api.stripe.com/v1/customers', data: {count: count || 10, offset: 0 || 10}, headers: headers}).
-          success(function (err, customers) {
-            console.log('customers', err, customers);
-            deferred.resolve(customers);
-          }).
-          error(function (err) {
-            console.log('customers error', err);
-            $scope.error(err);
-            deferred.reject(err)
-          });
         return deferred.promise;
       }
     };
