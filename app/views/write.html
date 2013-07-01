@@ -1,0 +1,62 @@
+<div ng-controller="WriteCtrl">
+    <br>
+    <span class="col-span-1">
+        <div class="btn-group-vertical">
+            <button tabindex="10" class="btn btn-small bubble-medium"></button>
+            <button tabindex="11" class="btn btn-small truck"></button>
+            <button tabindex="12" class="btn btn-small gears"></button>
+        </div>
+    </span>
+
+    <span class="col-span-11">
+        <!--Create Post-->
+        <div id="post-panel" class="panel">
+            <div class="panel-heading">
+                <span class="panel-heading-primary">Create Post</span>
+            </div>
+            <div class="panel-primary">
+                <textarea name="" id=""></textarea>
+            </div>
+        </div>
+        
+        <!--Upload-->
+        <div id="post-panel" class="panel">
+            <div class="panel-heading">
+                <span class="panel-heading-primary">Upload</span>
+                <span class="panel-heading-secondary"></span>
+            </div>
+            <div class="panel-primary">
+                <p>
+                    We support <a href="http://codex.wordpress.org/Tools_Export_Screen">WordPress eXtended Rss</a>
+                </p>
+                <div filepicker>
+                    <input filepicker
+                           id="filepickerWXR"
+                           ng-model="user.files.wxr"
+                           type="filepicker-dragdrop"
+                           data-fp-multiple="false"
+                           data-fp-key="{{filepicker.key}}"
+                           data-fp-button-class="btn btn-large background-color-5"
+                           data-fp-button-text="Upload WordPress eXtended Rss File"
+                           data-fp-drag-text="Or Drop .xml File Here"
+                           data-fp-drag-class="btn btn-large"
+                           data-fp-mimetypes="application/xml,text/xml"
+                           data-fp-extention=".xml"
+                           data-fp-container="modal"
+                           data-fp-store-location="s3"
+                           data-fp-store-path="{{user.id}}/"
+                           onchange="(function () {
+                             var element = document.getElementById('filepickerWXR'),
+                              scope = angular.element(element).scope();
+                             scope.setWXR(element);
+                           })();"
+                    />
+
+
+                    <button class="btn btn-large background-color-2" ng-show="user.files.wxr" ng-click="processWXR(user.files.wxr)">Process File</button>
+                </div>
+
+            </div>
+        </div>
+    </span>
+</div>

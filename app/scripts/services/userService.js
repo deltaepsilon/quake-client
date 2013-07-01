@@ -27,6 +27,9 @@ angular.module('quiverApp')
               $rootScope.stripe = {
                 pk: data.stripePK
               };
+              $rootScope.filepicker = {
+                key: data.filepickerKey
+              };
               deferred.resolve(data);
             }).
             error(function (data, status) {

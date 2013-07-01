@@ -29,13 +29,13 @@
     <div ng-controller="QuiverCtrl">
         <nav>
             <div class="menu btn-group background-color-000 full-width" qv-active='qv-active-route'>
-                <div class="btn btn-small gears background-color-hover-1" ng-click="changeLocation('/settings')" qv-active-route="/settings"></div>
-                <div class="btn btn-large background-color-hover-1" ng-click="changeLocation('/write')" qv-active-route="/write">Write</div>
-                <div class="btn btn-large background-color-hover-1" ng-click="changeLocation('/read')" qv-active-route="/read">Read</div>
-                <div class="btn btn-large background-color-hover-1" ng-click="changeLocation('/feeds')" qv-active-route="/feeds">Feeds</div>
-                <div class="btn btn-large background-color-hover-1" ng-click="changeLocation('/interaction')" qv-active-route="/interaction">Interaction</div>
-                <div class="btn btn-large background-color-hover-1" ng-click="changeLocation('/subscriptions')" qv-active-route="/subscriptions">Subscriptions</div>
-                <a class="btn btn-large pull-right background-color-hover-3" href='/logout'>Log Out</a>
+                <a tabindex="1" class="btn btn-small gears background-color-hover-1" href="/settings" qv-active-route="/settings"></a>
+                <a tabindex="2" class="btn btn-large background-color-hover-1" href="/write" qv-active-route="/write">Write</a>
+                <a tabindex="3" class="btn btn-large background-color-hover-1" href="/read" qv-active-route="/read">Read</a>
+                <a tabindex="4" class="btn btn-large background-color-hover-1" href="/feeds" qv-active-route="/feeds">Feeds</a>
+                <a tabindex="5" class="btn btn-large background-color-hover-1" href="/interaction" qv-active-route="/interaction">Interaction</a>
+                <a tabindex="6" class="btn btn-large background-color-hover-1" href="/subscriptions" qv-active-route="/subscriptions">Subscriptions</a>
+                <a tabindex="7" class="btn btn-large pull-right background-color-hover-3" href='/logout'>Log Out</a>
             </div>
         </nav>
         <div notification ng-click="hideNotifications()"></div>
@@ -60,6 +60,9 @@
     <script src="scripts/directives/notification.js"></script>
     <script src="scripts/directives/qvActive.js"></script>
     <script src="scripts/directives/qvTable.js"></script>
+    <script src="scripts/controllers/write.js"></script>
+    <script src="scripts/directives/filepicker.js"></script>
+    <script type="text/javascript" src="https://api.filepicker.io/v1/filepicker.js"></script>
     <!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

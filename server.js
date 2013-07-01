@@ -92,7 +92,12 @@ app.get('/user', function (req, res) {
     done = function (user, resultToken) {
       res.setHeader('Content-Type', 'text/json');
       res.setHeader('x-quake-token', resultToken);
-      res.send(JSON.stringify({user: _.omit(user, ['clientID', 'clientSecret', 'values', '_json', '_raw']), quakeRoot: quakeRoot, stripePK: conf.get('stripe_pk')}));
+      res.send(JSON.stringify({
+        user: _.omit(user, ['clientID', 'clientSecret', 'values', '_json', '_raw']),
+        quakeRoot: quakeRoot,
+        stripePK: conf.get('stripe_pk'),
+        filepickerKey: conf.get('filepicker_key')
+      }));
     };
   if (!user) {
     return renderTemplate(res, 'login');

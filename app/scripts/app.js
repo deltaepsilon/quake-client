@@ -63,6 +63,13 @@ angular.module('quiverApp', ['ngResource'])
           }
         }
       })
+      .when('/write', {
+        templateUrl: 'views/write.html',
+        controller: 'WriteCtrl',
+        resolve: {
+          user: userDependency
+        }
+      })
       .otherwise({
         redirectTo: '/'
       });

@@ -42,6 +42,12 @@ var convict = require('convict'),
       default: "This is totally invalid. Fix it.",
       env: "QUIVER_STRIPE_PK"
     },
+    filepicker_key: {
+      doc: "inkfilepicker.com API key",
+      format: "*",
+      default: "You should really change this",
+      env: "FILEPICKER_API_KEY"
+    },
     sessionSecret: {
       doc: "Connect session secret",
       format: "*",
