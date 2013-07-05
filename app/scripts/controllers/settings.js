@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('quiverApp')
-  .controller('SettingsCtrl', function ($scope, userService, stripeService) {
+  .controller('SettingsCtrl', function ($q, $scope, userService, stripeService) {
     var getYears = function () {
       var years = [],
         date = new Date(),
@@ -60,18 +60,29 @@ angular.module('quiverApp')
     }
 
     $scope.saveUser = function (user) {
-      $scope.user = userService.saveUser(user);
-      return $scope.user;
+      var deferred = $q.defer();
+       userService.saveUser(user).then(function (user) {
+         $scope.user = user;
+         deferred.resolve($scope.user);
+      });
+      return deferred.promise;
     };
 
     $scope.saveStripe = function (user) {
-      $scope.user = userService.saveUser(user);
-      return $scope.user;
+      var deferred = $q.defer();
+      userService.saveUser(user).then(function (user) {
+        $scope.user = user;
+      });
+      return deferred.promise;
     };
 
     $scope.saveSubscription = function (user) {
-      $scope.user = stripeService.saveSubscription(user);
+      var deferred = $q.defer();
+      stripeService.saveSubscription(user).then(function (user) {
+        $scope.user = user;
+      });
       return $scope.user;
+      return deferred.promise;
     };
 
     $scope.saveCard = function (card, user) {

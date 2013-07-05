@@ -29,24 +29,23 @@
                 <p>
                     We support <a href="http://codex.wordpress.org/Tools_Export_Screen">WordPress eXtended Rss</a>
                 </p>
-                <div filepicker>
-                    <input filepicker
-                           id="filepickerWXR"
+                <div class="filepicker" filepicker ng-show="filepicker.live">
+                    <input id="filepicker-wxr"
                            ng-model="user.files.wxr"
                            type="filepicker-dragdrop"
-                           data-fp-multiple="false"
+                           data-fp-multiple="true"
                            data-fp-key="{{filepicker.key}}"
                            data-fp-button-class="btn btn-large background-color-5"
                            data-fp-button-text="Upload WordPress eXtended Rss File"
                            data-fp-drag-text="Or Drop .xml File Here"
-                           data-fp-drag-class="btn btn-large"
+                           data-fp-drag-class="btn btn-large dropzone"
                            data-fp-mimetypes="application/xml,text/xml"
                            data-fp-extention=".xml"
                            data-fp-container="modal"
                            data-fp-store-location="s3"
                            data-fp-store-path="{{user.id}}/"
                            onchange="(function () {
-                             var element = document.getElementById('filepickerWXR'),
+                             var element = document.getElementById('filepicker-wxr'),
                               scope = angular.element(element).scope();
                              scope.setWXR(element);
                            })();"

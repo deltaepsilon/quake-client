@@ -16,7 +16,7 @@
                     <input type="email" placeholder="email" ng-model="user.emails[0].value"/>
                 </div>
 
-                <div class="col-span-3">
+                <div class="col-span-6">
                     <button class="btn btn-large background-color-3" ng-click="saveUser(user); userForm.$setPristine();" ng-disabled="!userForm.$valid || userForm.$pristine" >Save User Settings</button>
                 </div>
             </form>
@@ -131,7 +131,7 @@
                     <input type="text" placeholder="" ng-model="user.stripe.coupon"/>
                 </div>
 
-                <div class="col-span-3" ng-show="user.stripe.customer.subscription.plan">
+                <div class="col-span-6" ng-show="user.stripe.customer.subscription.plan">
                     <button class="btn btn-large background-color-6" ng-click="saveSubscription(user); subscriptionForm.$setPristine();" ng-disabled="!subscriptionForm.$valid || subscriptionForm.$pristine" >Change Subscription</button>
                 </div>
 
@@ -176,7 +176,7 @@
                     <input type="text" placeholder="123" ng-model="card.cvc" ng-pattern="/\d{3,4}/" required />
                 </div>
 
-                <div class="col-span-3">
+                <div class="col-span-6">
                     <button class="btn btn-large background-color-6" ng-click="saveCard(card, user); cardForm.$setPristine();" ng-disabled="!cardForm.$valid || !isValidCard(card) || cardForm.$pristine || !subscriptionName(user)" >
                         {{subscriptionMessage(user)}}
                     </button>
@@ -204,7 +204,7 @@
                     <input type="text" placeholder="pk_live_RaNdOmNoNsEnSe" ng-model="user.stripeKeys.publicKey"/>
                 </div>
 
-                <div class="col-span-3">
+                <div class="col-span-6">
                     <button class="btn btn-large background-color-4" ng-click="saveUser(user); stripeForm.$setPristine();" ng-disabled="!stripeForm.$valid || stripeForm.$pristine" >Save Stripe Settings</button>
                 </div>
             </form>

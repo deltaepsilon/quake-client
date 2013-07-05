@@ -67,7 +67,10 @@ angular.module('quiverApp', ['ngResource'])
         templateUrl: 'views/write.html',
         controller: 'WriteCtrl',
         resolve: {
-          user: userDependency
+          user: userDependency,
+          files: function ($q, fileService) {
+
+          }
         }
       })
       .otherwise({

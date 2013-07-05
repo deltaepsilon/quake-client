@@ -14,7 +14,7 @@
                 <p>We use Stripe for all payment processing. Stripe has a crazy-fast sign-up process, so you'll be accepting payments in no time.</p>
                 <p><a href="https://stripe.com/">Create a Stripe account</a>, activate it, and enter your API keys (<a href="https://stripe.com/docs/tutorials/dashboard">quick tutorial</a>) into Quiver to activate your feeds.</p>
             </div>
-            <div class="col-span-3">
+            <div class="col-span-6">
                 <br/>
                 <button class="btn btn-large background-color-3" ng-click="changeLocation('/settings#stripe-keys')">Enter API Keys</button>
             </div>
@@ -28,7 +28,7 @@
                 <p>We host all of your feeds including video, images and downloads for a single monthly price.</p>
                 <p>Subscribe now to start publishing your content on Quiver's lightening-fast platform.</p>
             </div>
-            <span class="col-span-3">
+            <span class="col-span-6">
                 <br/>
                 <button class="btn btn-large background-color-2" ng-click="changeLocation('/settings#billing')">Activate Subscription</button>
             </span>
@@ -55,7 +55,7 @@
                     <input type="number" placeholder="$" ng-model="feed.price" ng-pattern="/[0-9]+/"/>
                 </div>
 
-                <div class="col-span-3">
+                <div class="col-span-6">
                     <button class="btn btn-large background-color-4" ng-click="saveFeed(feed)" ng-disabled="!feedForm.$valid" >Save Feed</button>
                 </div>
             </form>

@@ -22,3 +22,9 @@
 #quiver-notifications .success {
   background-color: #5999a8;
 }
+
+/* line 21, ../../../app/styles/scss/quiver.scss */
+.filepicker .dropzone {
+  margin: 1em 0 !important;
+  padding: 1em !important;
+}
