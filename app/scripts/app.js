@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('quiverApp', ['ngResource'])
+angular.module('quiverApp', ['ngResource', 'btford.socket-io'])
   .config(function ($routeProvider, $locationProvider) {
     var search = location.search,
       searchREGEX = /(\w+=[^&]+)/g,
