@@ -9,7 +9,7 @@ describe('Controller: SettingsCtrl', function () {
     scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
+  beforeEach(inject(function ($controller, $rootScope, $q) {
     scope = $rootScope.$new();
 
     //Seed scope with a user
@@ -30,11 +30,17 @@ describe('Controller: SettingsCtrl', function () {
     SettingsCtrl = $controller('SettingsCtrl', {
       $scope: scope,
       userService: {saveUser: function (user) {
-        return user;
+        var deferred = $q.defer();
+        deferred.resolve(user);
+        return deferred.promise;
+
       }},
       stripeService: {
         saveSubscription: function (user) {
-          return user;
+          var deferred = $q.defer();
+          deferred.resolve(user);
+          return deferred.promise;
+
         },
         saveCard: function (card, user) {
           user = {stripe: {customer: {card: card}}};
@@ -80,15 +86,33 @@ describe('Controller: SettingsCtrl', function () {
   });
 
   it('should save user', function () {
-    expect(scope.saveUser({name: 'chris'})).toEqual({name: 'chris'});
+    var user;
+    scope.saveUser({name: 'chris'}).then(function (auser) {
+      user = auser;
+    });
+    scope.$apply();
+    expect(user).toEqual({name: 'chris'});
+
   });
 
   it('should save saveStripe', function () {
-    expect(scope.saveStripe({stripe: {customer: {}}})).toEqual({stripe: {customer: {}}});
+    var user;
+    scope.saveStripe({stripe: {customer: {}}}).then(function (auser) {
+      user = auser;
+    });
+    scope.$apply();
+    expect(user).toEqual({stripe: {customer: {}}});
+
   });
 
   it('should save subscription', function () {
-    expect(scope.saveSubscription({user: 'chris'})).toEqual({user: 'chris'});
+    var user;
+    scope.saveSubscription({user: 'chris'}).then(function (auser) {
+      user = auser;
+    });
+    scope.$apply();
+    expect(user).toEqual({user: 'chris'});
+
   });
 
   it('should save card', function () {

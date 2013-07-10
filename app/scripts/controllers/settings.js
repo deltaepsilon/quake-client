@@ -72,6 +72,7 @@ angular.module('quiverApp')
       var deferred = $q.defer();
       userService.saveUser(user).then(function (user) {
         $scope.user = user;
+        deferred.resolve($scope.user);
       });
       return deferred.promise;
     };
@@ -80,8 +81,8 @@ angular.module('quiverApp')
       var deferred = $q.defer();
       stripeService.saveSubscription(user).then(function (user) {
         $scope.user = user;
+        deferred.resolve($scope.user);
       });
-      return $scope.user;
       return deferred.promise;
     };
 

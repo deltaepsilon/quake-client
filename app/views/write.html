@@ -26,6 +26,11 @@
                 <span class="panel-heading-secondary"></span>
             </div>
             <div class="panel-primary">
+                <div ng-show="wxrTable">
+                    <h4>Saved WXR</h4>
+                    <table class="table-dark light-text" qv-table thead-class="light-text background-color-4" columns="wxrTable.columns" rows="wxrTable.rows" tableizer="wxrTableizer(wxrFiles)" binds="wxrImport"></table>
+                </div>
+                <br>
                 <p>
                     We support <a href="http://codex.wordpress.org/Tools_Export_Screen">WordPress eXtended Rss</a>
                 </p>
@@ -47,12 +52,10 @@
                            onchange="(function () {
                              var element = document.getElementById('filepicker-wxr'),
                               scope = angular.element(element).scope();
-                             scope.setWXR(element);
+                             scope.createWXR(element);
                            })();"
                     />
 
-
-                    <button class="btn btn-large background-color-2" ng-show="user.files.wxr" ng-click="processWXR(user.files.wxr)">Process File</button>
                 </div>
 
             </div>

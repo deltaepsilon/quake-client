@@ -39,19 +39,28 @@ angular.module('quiverApp')
     };
 
     // Public API here
-    return {
-      getResource: function (path) {
+    var resourceService = {
+      getResource: function (path, options) {
         var deferred = $q.defer();
         if (!$rootScope.quake) {
           return getUser().then(function () {
-            deferred.resolve(getResource(path));
+            deferred.resolve(getResource(path, options));
           });
         } else {
-          deferred.resolve(getResource(path));
+          deferred.resolve(getResource(path, options));
         }
 
         return deferred.promise;
       },
-      getUser: getUser
+      getUser: getUser,
+      success: function (success) {
+        $rootScope.error('Saved', 'success');
+      },
+      error: function (error, notificationClass) {
+        $rootScope.error(error, notificationClass);
+      },
+      scope: $rootScope,
+      resource: $resource
     };
+    return resourceService;
   });

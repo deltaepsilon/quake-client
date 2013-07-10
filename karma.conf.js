@@ -11,6 +11,8 @@ files = [
   'app/components/angular-resource/angular-resource.js',
   'app/components/angular-mocks/angular-mocks.js',
   'app/components/jquery/jquery.js',
+  'app/components/socket.io-client/dist/socket.io.js',
+  'app/components/angular-socket-io/socket.js',
   'app/scripts/*.js',
   'app/scripts/**/*.js',
   'test/mock/**/*.js',

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('quiverApp')
-  .factory('userService', function ($q, $http, $resource, $rootScope, resourceService) {
+  .factory('userService', function ($q, $http, $resource, resourceService) {
 
     // Public API here
     return {
@@ -11,7 +11,7 @@ angular.module('quiverApp')
         var deferred = $q.defer();
 
         resourceService.getResource('/user', {save: {method: 'PUT'}}).then(function (resource) {
-          deferred.resolve(resource.save(user, $rootScope.success, $rootScope.error));
+          deferred.resolve(resource.save(user, resourceService.success, resourceService.error));
 
         });
         return deferred.promise;
@@ -21,7 +21,7 @@ angular.module('quiverApp')
         var deferred = $q.defer();
 
         resourceService.getResource('/user/subscribe', {save: {method: 'PUT'}}).then(function (resource) {
-          deferred.resolve(resource.save(user, $rootScope.success, $rootScope.error));
+          deferred.resolve(resource.save(user, resourceService.success, resourceService.error));
         });
         return deferred.promise;
       },
