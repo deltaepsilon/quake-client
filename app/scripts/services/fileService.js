@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('quiverApp')
-  .factory('fileService', function ($q, resourceService) {
+  .factory('fileService', function ($q, resourceService, socket) {
     // Service logic
     // ...
+
+
 
     // Public API here
     return {
@@ -14,6 +16,7 @@ angular.module('quiverApp')
 //          deferred.resolve(resource.get(query)); //Returns user object
         });
         return deferred.promise;
+
       },
       create: function (classification, paths) {
         var deferred = $q.defer();
@@ -21,6 +24,7 @@ angular.module('quiverApp')
           resource.save({classification: classification, paths: paths}, deferred.resolve, deferred.reject); //Returns user object
         });
         return deferred.promise;
+
       },
       destroy: function (id) {
         var deferred = $q.defer();
@@ -28,6 +32,18 @@ angular.module('quiverApp')
           resource.remove({id: id}, deferred.resolve, deferred.reject); //Returns success message
         });
         return deferred.promise;
+
+      },
+      wxr: function (id) {
+        var deferred = $q.defer();
+
+        resourceService.getQuake().then(function (quake) {
+          var wxrSocket = socket.connect(quake.root + '/wxr?token_type=bearer&access_token=');// + quake.token);
+          return ;
+        });
+
+        return deferred.promise;
+
       }
     };
   });

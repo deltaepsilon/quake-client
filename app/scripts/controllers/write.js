@@ -58,11 +58,23 @@ angular.module('quiverApp')
       return $scope.wxrTable = wxrTable;
 
     };
-    $scope.wxrImport = function (id) {
-      alert('import id', id);
 
+    $scope.wxrImport = function (id) {
+      fileService.wxr(id).then(function (socket) {
+        socket.on('update', function (e, data) {
+          console.log('update', e, data);
+        });
+        socket.on('complete', function (e, data) {
+          console.log('complete', e, data);
+        });
+
+      });
 
     };
+
+    //TODO TESTING ONLY
+    $scope.wxrImport('1234ideclareathumbwar');
+
     $scope.wxrDelete = function (id) {
       fileService.destroy(id).then(function () {
         refreshWXR();
