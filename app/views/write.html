@@ -28,7 +28,7 @@
             <div class="panel-primary">
                 <div ng-show="wxrTable">
                     <h4>Saved WXR</h4>
-                    <table class="table-dark light-text" qv-table thead-class="light-text background-color-4" columns="wxrTable.columns" rows="wxrTable.rows" tableizer="wxrTableizer(wxrFiles)" binds="wxrImport"></table>
+                    <table class="table-dark light-text" style="position: relative;" qv-progress="wxrProgress" qv-table="wxrTable"  tableizer="wxrTableizer"></table>
                 </div>
                 <br>
                 <p>
@@ -48,7 +48,7 @@
                            data-fp-extention=".xml"
                            data-fp-container="modal"
                            data-fp-store-location="s3"
-                           data-fp-store-path="{{user.id}}/"
+                           data-fp-store-path="{{user.id}}/wxr/"
                            onchange="(function () {
                              var element = document.getElementById('filepicker-wxr'),
                               scope = angular.element(element).scope();

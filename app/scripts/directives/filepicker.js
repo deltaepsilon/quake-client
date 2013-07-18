@@ -11,7 +11,7 @@ angular.module('quiverApp')
             filepicker.constructWidget(element.find('input')[0]);
           }
           scope.filepicker.live = true;
-        }, 750);
+        }, 1000);
 
       },
       controller: function ($scope) {

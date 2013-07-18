@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('quiverApp')
-  .factory('fileService', function ($q, resourceService, socket) {
+  .factory('fileService', function ($q, resourceService, io) {
     // Service logic
     // ...
 
@@ -11,8 +11,8 @@ angular.module('quiverApp')
     return {
       get: function (query) {
         var deferred = $q.defer();
-        resourceService.getResource('/file/findAll', {get: {method: 'GET', isArray: true}}).then(function (resource) {
-          resource.get(query, deferred.resolve, deferred.reject);
+        resourceService.getResource('/file/findAll', {get: {method: 'POST', isArray: true}}).then(function (resource) {
+          resource.get({where: JSON.stringify(query)}, deferred.resolve, deferred.reject);
 //          deferred.resolve(resource.get(query)); //Returns user object
         });
         return deferred.promise;
@@ -38,10 +38,13 @@ angular.module('quiverApp')
         var deferred = $q.defer();
 
         resourceService.getQuake().then(function (quake) {
-          var wxrSocket = socket.connect(quake.root + '/wxr?token_type=bearer&access_token=');// + quake.token);
-          return ;
-        });
+          var socket = io.connect(quake.root + '?token_type=bearer&access_token=' + quake.token);
+          socket.on('connect', function () {
+            socket.emit('message', JSON.stringify({url: '/file/wxr', data: {id: id, 'access_token': quake.token, 'token_type': 'bearer'}}));
+          });
+          deferred.resolve(socket);
 
+        });
         return deferred.promise;
 
       }

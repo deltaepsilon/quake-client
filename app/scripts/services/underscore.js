@@ -1,12 +1,10 @@
 'use strict';
 
 angular.module('quiverApp')
-  .factory('io', function () {
+  .factory('_', function () {
     // Service logic
     // ...
 
-
-
     // Public API here
-    return io;
+    return _;
   });
