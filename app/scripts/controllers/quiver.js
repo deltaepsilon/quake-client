@@ -7,7 +7,7 @@ angular.module('quiverApp')
     $rootScope.noop = function () {};
 
     $rootScope.success = function (success) {
-      $rootScope.error('Saved', 'success');
+      $rootScope.error(success || 'Saved', 'success');
     };
 
     $rootScope.error = function (error, notificationClass) {

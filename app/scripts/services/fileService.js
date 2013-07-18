@@ -29,7 +29,7 @@ angular.module('quiverApp')
       destroy: function (id) {
         var deferred = $q.defer();
         resourceService.getResource('/file/destroy').then(function (resource) {
-          resource.remove({id: id}, deferred.resolve, deferred.reject); //Returns success message
+          resource.remove({where: JSON.stringify({id: id})}, deferred.resolve, deferred.reject); //Returns success message
         });
         return deferred.promise;
 
@@ -38,7 +38,7 @@ angular.module('quiverApp')
         var deferred = $q.defer();
 
         resourceService.getQuake().then(function (quake) {
-          var socket = io.connect(quake.root + '?token_type=bearer&access_token=' + quake.token);
+          var socket = io.connect(quake.root + '?token_type=bearer&access_token=' + quake.token, {'force new connection': true});
           socket.on('connect', function () {
             socket.emit('message', JSON.stringify({url: '/file/wxr', data: {id: id, 'access_token': quake.token, 'token_type': 'bearer'}}));
           });
