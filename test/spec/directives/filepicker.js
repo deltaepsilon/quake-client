@@ -1,13 +1,15 @@
 'use strict';
 
 describe('Directive: filepicker', function () {
-  beforeEach(module('testApp'));
+  beforeEach(module('quiverApp'));
 
   var element;
 
-  it('should make hidden element visible', inject(function ($rootScope, $compile) {
-    element = angular.element('<filepicker></filepicker>');
+  it('should inject a filepicker widget', inject(function ($rootScope, $compile) {
+    $rootScope.filepicker = {key: '123'}
+    element = angular.element('<div filepicker><input/></div>');
     element = $compile(element)($rootScope);
+    console.log('html', element.html());
     expect(element.text()).toBe('this is the filepicker directive');
   }));
 });

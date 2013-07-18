@@ -27,7 +27,7 @@ angular.module('quiverApp')
 
 
     $scope.wxrTable = {};
-    $scope.wxrTableizer = function (repeat) {
+    $scope.wxrTableizer = function () {
       var files = $scope.wxrFiles,
         wxrTable,
         i,

@@ -13,7 +13,6 @@ angular.module('quiverApp')
         var deferred = $q.defer();
         resourceService.getResource('/file/findAll', {get: {method: 'POST', isArray: true}}).then(function (resource) {
           resource.get({where: JSON.stringify(query)}, deferred.resolve, deferred.reject);
-//          deferred.resolve(resource.get(query)); //Returns user object
         });
         return deferred.promise;
 
@@ -28,7 +27,7 @@ angular.module('quiverApp')
       },
       destroy: function (id) {
         var deferred = $q.defer();
-        resourceService.getResource('/file/destroy').then(function (resource) {
+        resourceService.getResource('/file/destroy?where=%7B%7D').then(function (resource) {
           resource.remove({where: JSON.stringify({id: id})}, deferred.resolve, deferred.reject); //Returns success message
         });
         return deferred.promise;
@@ -38,7 +37,7 @@ angular.module('quiverApp')
         var deferred = $q.defer();
 
         resourceService.getQuake().then(function (quake) {
-          var socket = io.connect(quake.root + '?token_type=bearer&access_token=' + quake.token, {'force new connection': true});
+           var socket = io.connect(quake.root + '?token_type=bearer&access_token=' + quake.token, {'force new connection': true});
           socket.on('connect', function () {
             socket.emit('message', JSON.stringify({url: '/file/wxr', data: {id: id, 'access_token': quake.token, 'token_type': 'bearer'}}));
           });

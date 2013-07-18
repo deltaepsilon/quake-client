@@ -27,6 +27,7 @@ angular.module('quiverApp')
             bar = angular.element(templates[scope.progress.template]);
             progressBar = bar.find('.progress-bar');
             container = element.find('#' + scope.progress.id);
+
             cached = container.html();
 
             $compile(bar)(scope);

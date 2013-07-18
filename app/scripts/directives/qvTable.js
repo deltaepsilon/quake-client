@@ -7,9 +7,6 @@ angular.module('quiverApp')
       restrict: 'A',
       scope: true,
       link: function postLink(scope, element, attrs) {
-        console.log('scope', scope);
-//        scope.tableizer();
-
         var tableizer = scope.$eval(attrs.tableizer),
           data = attrs.qvTable;
 

@@ -10,8 +10,11 @@ describe('Directive: qvTable', function () {
       column1: 'column1 td',
       column2: 'column2 td'
     }];
-    $rootScope.customerTableizer = function (customers) {
-      var customerTable = {
+    $rootScope.customerTableizer = function () {
+      var customers = $rootScope.customers,
+        customerTable = {
+          theadClass: "custom-thead-class",
+          tbodyClass: "custom-tbody-class",
           columns: [
             {name: "column1 th"},
             {name: "column2 th"}
@@ -33,7 +36,7 @@ describe('Directive: qvTable', function () {
       return $rootScope.customerTable = customerTable;
     };
 
-    element = angular.element('<table class="custom-table-class" qv-table thead-class="custom-thead-class" tbody-class="custom-tbody-class" columns="customerTable.columns" rows="customerTable.rows" tableizer="customerTableizer(customers)"></table>');
+    element = angular.element('<table class="custom-table-class" qv-table="customerTable" tableizer="customerTableizer"></table>');
     element = $compile(element)($rootScope);
     $rootScope.$digest();
     expect(element.hasClass('custom-table-class')).toBe(true);
