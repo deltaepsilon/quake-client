@@ -27,7 +27,7 @@ angular.module('quiverApp')
       },
       destroy: function (id) {
         var deferred = $q.defer();
-        resourceService.getResource('/file/destroy?where=%7B%7D').then(function (resource) {
+        resourceService.getResource('/file/destroy').then(function (resource) {
           resource.remove({where: JSON.stringify({id: id})}, deferred.resolve, deferred.reject); //Returns success message
         });
         return deferred.promise;

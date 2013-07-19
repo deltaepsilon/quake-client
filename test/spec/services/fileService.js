@@ -38,7 +38,7 @@ describe('Service: fileService', function () {
 
   it('should DESTROY files', inject(function ($httpBackend) {
     var mock = {test: 2};
-    $httpBackend.when('DELETE', 'localhost/file/destroy?where=%7B%7D?where=%7B%7D').respond(mock);
+    $httpBackend.when('DELETE', 'localhost/file/destroy?where=%7B%7D').respond(mock);
     $httpBackend.when('GET', '/user').respond({quakeRoot: 'localhost'});
     fileService.destroy().then(function (result) {
       expect(result.length).toBe(undefined);
