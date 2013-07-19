@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('quiverApp')
-  .controller('FeedsCtrl', function ($scope) {
+  .controller('PublishCtrl', function ($scope) {
     $scope.feed = {};
 
     $scope.isStriped = function (user) {

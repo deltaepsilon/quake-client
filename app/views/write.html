@@ -11,45 +11,4 @@
         </div>
     </div>
 
-    <!--Upload-->
-    <div id="post-panel" class="panel">
-        <div class="panel-heading">
-            <span class="panel-heading-primary">Upload</span>
-            <span class="panel-heading-secondary"></span>
-        </div>
-        <div class="panel-primary">
-            <div ng-show="wxrTable">
-                <h4>Saved WXR</h4>
-                <table class="table-dark light-text" style="position: relative;" qv-progress="wxrProgress" qv-table="wxrTable"  tableizer="wxrTableizer"></table>
-            </div>
-            <br>
-            <p>
-                We support <a href="http://codex.wordpress.org/Tools_Export_Screen">WordPress eXtended Rss</a>
-            </p>
-            <div class="filepicker" filepicker ng-show="filepicker.live">
-                <input id="filepicker-wxr"
-                       ng-model="user.files.wxr"
-                       type="filepicker-dragdrop"
-                       data-fp-multiple="false"
-                       data-fp-key="{{filepicker.key}}"
-                       data-fp-button-class="btn btn-large background-color-5"
-                       data-fp-button-text="Upload WordPress eXtended Rss File"
-                       data-fp-drag-text="Or Drop .xml File Here"
-                       data-fp-drag-class="btn btn-large dropzone"
-                       data-fp-mimetypes="application/xml,text/xml"
-                       data-fp-extention=".xml"
-                       data-fp-container="modal"
-                       data-fp-store-location="s3"
-                       data-fp-store-path="{{user.id}}/wxr/"
-                       onchange="(function () {
-                         var element = document.getElementById('filepicker-wxr'),
-                          scope = angular.element(element).scope();
-                         scope.wxrCreate(element);
-                       })();"
-                />
-
-            </div>
-
-        </div>
-    </div>
 </div>

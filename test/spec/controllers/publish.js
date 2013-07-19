@@ -1,11 +1,11 @@
 'use strict';
 
-describe('Controller: FeedsCtrl', function () {
+describe('Controller: PublishCtrl', function () {
 
   // load the controller's module
   beforeEach(module('quiverApp'));
 
-  var FeedsCtrl,
+  var PublishCtrl,
     scope,
     userNoPublic = {stripe: {secretKey: 'fakekey', publicKey: null}},
     userNoSecret = {stripe: {secretKey: null, publicKey: 'fakekey'}},
@@ -16,7 +16,7 @@ describe('Controller: FeedsCtrl', function () {
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    FeedsCtrl = $controller('FeedsCtrl', {
+    PublishCtrl = $controller('PublishCtrl', {
       $scope: scope
     });
   }));

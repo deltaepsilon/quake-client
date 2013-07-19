@@ -43,9 +43,9 @@ angular.module('quiverApp', ['ngResource'])
           user: userDependency
         }
       })
-      .when('/feeds', {
-        templateUrl: 'views/feeds.html',
-        controller: 'FeedsCtrl'
+      .when('/publish', {
+        templateUrl: 'views/publish.html',
+        controller: 'PublishCtrl'
       })
       .when('/admin-customers', {
         templateUrl: 'views/admin/customers.html',
@@ -66,6 +66,13 @@ angular.module('quiverApp', ['ngResource'])
       .when('/write', {
         templateUrl: 'views/write.html',
         controller: 'WriteCtrl',
+        resolve: {
+          user: userDependency
+        }
+      })
+      .when('/import', {
+        templateUrl: 'views/import.html',
+        controller: 'ImportCtrl',
         resolve: {
           user: userDependency
         }
