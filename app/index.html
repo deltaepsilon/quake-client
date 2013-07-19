@@ -27,20 +27,27 @@
 
     <!-- Add your site or application content here -->
     <div ng-controller="QuiverCtrl">
-        <nav>
-            <div class="menu btn-group background-color-000 full-width" qv-active='qv-active-route'>
-                <a tabindex="1" class="btn btn-small gears background-color-hover-1" href="/settings" qv-active-route="/settings"></a>
-                <a tabindex="2" class="btn btn-large background-color-hover-1" href="/write" qv-active-route="/write">Write</a>
-                <a tabindex="3" class="btn btn-large background-color-hover-1" href="/read" qv-active-route="/read">Read</a>
-                <a tabindex="4" class="btn btn-large background-color-hover-1" href="/feeds" qv-active-route="/feeds">Feeds</a>
-                <a tabindex="5" class="btn btn-large background-color-hover-1" href="/interaction" qv-active-route="/interaction">Interaction</a>
-                <a tabindex="6" class="btn btn-large background-color-hover-1" href="/subscriptions" qv-active-route="/subscriptions">Subscriptions</a>
-                <a tabindex="7" class="btn btn-large pull-right background-color-hover-3" href='/logout'>Log Out</a>
-            </div>
-        </nav>
         <div notification ng-click="hideNotifications()"></div>
 
-        <div ng-view>
+        <nav class="menu btn-group background-color-000 full-width" qv-active='qv-active-route'>
+            <div class="col-span-2"></div>
+            <a tabindex="10" class="btn btn-large background-color-hover-1" href="/write" qv-active-route="/write">Create</a>
+            <a tabindex="20" class="btn btn-large background-color-hover-1" href="/publish" qv-active-route="/publish">Publish</a>
+            <a tabindex="30" class="btn btn-large background-color-hover-1" href="/interact" qv-active-route="/interact">Interact</a>
+            <a tabindex="40" class="btn btn-large background-color-hover-1" href="/read" qv-active-route="/read">Read</a>
+            <a tabindex="50" class="btn btn-large background-color-hover-1" href="/subscribe" qv-active-route="/subscribe">Subscribe</a>
+            <a tabindex="60" class="btn btn-small pull-right gears background-color-hover-1" href="/settings" qv-active-route="/settings"></a>
+            <a tabindex="70" class="btn btn-large pull-right background-color-hover-3" href='/logout'>Log Out</a>
+        </nav>
+        <nav class="col-span-2 left-nav background-color-000" ng-show="pathIncludes(['write', 'posts', 'files', 'import'])" class="menu btn-group background-color-000 full-width" qv-active='qv-active-route'>
+            <a tabindex="11" class="btn btn-large background-color-hover-1" href="/write" qv-active-route="/write">Write</a>
+            <a tabindex="12" class="btn btn-large background-color-hover-1" href="/posts" qv-active-route="/posts">Posts</a>
+            <a tabindex="13" class="btn btn-large background-color-hover-1" href="/files" qv-active-route="/files">Files</a>
+            <a tabindex="14" class="btn btn-large background-color-hover-1" href="/import" qv-active-route="/import">Import</a>
+        </nav>
+
+
+        <div class="col-span-10" ng-view>
 
         </div>
     </div>

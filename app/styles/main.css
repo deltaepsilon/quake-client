@@ -4,6 +4,11 @@
 }
 
 /* line 1, ../../../app/styles/scss/quiver.scss */
+.left-nav {
+  padding: 0;
+}
+
+/* line 5, ../../../app/styles/scss/quiver.scss */
 #quiver-notifications {
   cursor: pointer;
   position: fixed;
@@ -14,16 +19,16 @@
   opacity: .97;
   z-index: 1000;
 }
-/* line 11, ../../../app/styles/scss/quiver.scss */
+/* line 15, ../../../app/styles/scss/quiver.scss */
 #quiver-notifications .error {
   background-color: #e66f69;
 }
-/* line 15, ../../../app/styles/scss/quiver.scss */
+/* line 19, ../../../app/styles/scss/quiver.scss */
 #quiver-notifications .success {
   background-color: #5999a8;
 }
 
-/* line 21, ../../../app/styles/scss/quiver.scss */
+/* line 25, ../../../app/styles/scss/quiver.scss */
 .filepicker .dropzone {
   margin: 1em 0 !important;
   padding: 1em !important;

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('quiverApp')
-  .controller('QuiverCtrl', function ($scope, $location, $rootScope, userService) {
+  .controller('QuiverCtrl', function ($scope, $location, $rootScope, userService, _) {
     $scope.notifications = [];
 
     $rootScope.noop = function () {};
@@ -36,6 +36,11 @@ angular.module('quiverApp')
 
     $scope.isTrialing = function (user) {
       return !!(user && user.stripe && user.stripe.customer && user.stripe.customer.subscription && user.stripe.customer.subscription.status === 'trialing');
+    };
+
+    var URL_CLEAN_REGEX = /\//;
+    $scope.pathIncludes = function (paths) {
+      return _.contains(paths, $location.url().replace(URL_CLEAN_REGEX, ''));
     };
 
   });
