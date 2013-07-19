@@ -79,10 +79,10 @@ angular.module('quiverApp')
         };
 
       $scope.wxrProgress.id = id;
-      $scope.wxrProgress.percent = 1;
+      $scope.wxrProgress.percent = 5;
       $scope.$broadcast('progressInit', $scope.wxrProgress);
       timer = $timeout(function () {
-        $scope.wxrProgress.percent += 3;
+        $scope.wxrProgress.percent += 10;
         broadcast();
       }, 2000);
 
@@ -118,7 +118,7 @@ angular.module('quiverApp')
       });
 
     };
-    $scope.createWXR = function (element) {
+    $scope.wxrCreate = function (element) {
       fileService.create('wxr', element.value).then(function () {
         refreshWXR();
       });
