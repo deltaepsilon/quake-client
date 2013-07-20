@@ -77,6 +77,17 @@ angular.module('quiverApp', ['ngResource'])
           user: userDependency
         }
       })
+      .when('/posts', {
+        templateUrl: 'views/posts.html',
+        controller: 'PostsCtrl',
+        resolve: {
+          posts: function ($q, postService) {
+            var deferred = $q.defer();
+            postService.findAll().then(deferred.resolve, deferred.reject);
+            return deferred.promise;
+          }
+        }
+      })
       .otherwise({
         redirectTo: '/'
       });
