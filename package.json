@@ -80,7 +80,7 @@
   ],
   "subdomain": "quiver",
   "scripts": {
-    "start": "node server.js",
+    "start": "node quiver.js",
     "test": "grunt test"
   }
 }
