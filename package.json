@@ -39,7 +39,10 @@
     "redis": "~0.8.3",
     "underscore": "~1.4.4",
     "node-md5": "0.0.1",
-    "md5": "~1.0.0"
+    "md5": "~1.0.0",
+    "grunt-shell": "~0.3.0",
+    "grunt-concurrent": "~0.3.0",
+    "grunt-nodemon": "0.0.5" 
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -67,11 +70,8 @@
     "nodeunit": "~0.8.0",
     "grunt-contrib-nodeunit": "~0.2.0",
     "supertest": "~0.7.0",
-    "grunt-contrib-watch": "~0.4.4",
-    "grunt-shell": "~0.3.0",
-    "grunt-concurrent": "~0.3.0",
-    "grunt-nodemon": "0.0.5"
-  },
+    "grunt-contrib-watch": "~0.4.4"
+ },
   "engines": {
     "node": ">=0.8.0"
   },
@@ -80,7 +80,7 @@
   ],
   "subdomain": "quiver",
   "scripts": {
-    "start": "node server.js",
+    "start": "node quiver.js",
     "test": "grunt test"
   }
 }

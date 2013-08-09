@@ -49,7 +49,7 @@ module.exports = function (grunt) {
 //        tasks: []
 //      },
       nodeunitTest: {
-        files: ['server.js', 'server-test.js'],
+        files: ['quiver.js', 'server-test.js'],
         tasks: ['nodeunit']
       }
     },
@@ -288,7 +288,7 @@ module.exports = function (grunt) {
     nodemon: {
       debug: {
         options: {
-          file: 'server.js',
+          file: 'quiver.js',
           ignoredFiles: ['app/**/*', 'app/*', 'node_modules/**/*', 'node_modules/*', 'dist/**/*', 'dist/*', 'test/**/*', 'test/*', '.idea/**/*', '.idea/*'],
           debug: false
         }

@@ -1,2 +1,2 @@
 #!/bin/bash
-node-inspector & node --debug server.js
+node-inspector & node --debug quiver.js

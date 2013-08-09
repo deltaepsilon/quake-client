@@ -11,7 +11,7 @@ var express = require('express'),
   quake = require('quake-sdk'),
   _ = require('underscore'),
   quakeRoot = conf.get('quake_external'),
-  indexDist = fs.readFileSync('./dist/index.html', 'utf8');
+  indexDist = fs.readFileSync(__dirname + '/dist/index.html', 'utf8');
 
 //***************************************** Template stuff
 var consolidate = require('consolidate'),
